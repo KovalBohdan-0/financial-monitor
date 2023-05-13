@@ -3,21 +3,22 @@ package com.ftf.financialmonitor.expense;
 import com.ftf.financialmonitor.customer.Customer;
 import com.ftf.financialmonitor.customer.CustomerService;
 import com.ftf.financialmonitor.exception.ResourceNotFoundException;
-import lombok.Data;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Data
+@AllArgsConstructor
 @Service
 public class ExpenseService {
     private ExpenseRepository expenseRepository;
     private CustomerService customerService;
 
     public Expense getExpenseById(Long id) {
-        return expenseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Expense not found"));
+        return expenseRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Expense not found"));
     }
 
     public List<Expense> getAllExpenses() {
@@ -26,9 +27,10 @@ public class ExpenseService {
         return expenseRepository.findAllByCustomerId(customer.getId());
     }
 
-    public void addExpense(Expense expense) {
+    public void addExpense(ExpenseDto expenseDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Customer customer = customerService.getCustomerByEmail(authentication.getName());
+        Expense expense = expenseDtoToEntity(expenseDto);
         expense.setCustomerId(customer.getId());
         expenseRepository.save(expense);
     }
@@ -41,7 +43,17 @@ public class ExpenseService {
         expenseRepository.delete(getExpenseById(id));
     }
 
-    public void deleteAllExpensesByUserId(Long customerId) {
-        expenseRepository.deleteAllByCustomerId(customerId);
+    public void deleteAllExpensesByUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Customer customer = customerService.getCustomerByEmail(authentication.getName());
+        expenseRepository.deleteAllByCustomerId(customer.getId());
+    }
+
+    private Expense expenseDtoToEntity(ExpenseDto expenseDto) {
+        return Expense.builder()
+                .money(expenseDto.getMoney())
+                .description(expenseDto.getDescription())
+                .creationTime(expenseDto.getCreationTime())
+                .build();
     }
 }
