@@ -12,14 +12,14 @@ public class CustomerController {
 
     private final CustomerService customerService;
 
-    @GetMapping
-    public Customer getCustomerById(@RequestParam("customerId") Long id){
+    @GetMapping("/{id}")
+    public Customer getCustomerById(@PathVariable Long id){
         log.info("fetching customer with id {}", id);
         return  customerService.getCustomerById(id);
     }
 
-    @GetMapping
-    public Customer getCustomerByEmail(@RequestParam("customerEmail") String email){
+    @GetMapping("/{email}")
+    public Customer getCustomerByEmail(@PathVariable String email){
         log.info("fetching customer with id {}", email);
         return  customerService.getCustomerByEmail(email);
     }
