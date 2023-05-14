@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class IncomeService {
         return incomeRepository.findAllByCustomerId(customer.getId());
     }
 
+    @Transactional
     public void addIncome(IncomeDto incomeDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Customer customer = customerService.getCustomerByEmail(authentication.getName());
@@ -35,14 +37,17 @@ public class IncomeService {
         incomeRepository.save(income);
     }
 
+    @Transactional
     public void updateIncome(Income income) {
         incomeRepository.save(income);
     }
 
+    @Transactional
     public void deleteIncome(Long id) {
         incomeRepository.delete(getIncomeById(id));
     }
 
+    @Transactional
     public void deleteAllIncomesByUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Customer customer = customerService.getCustomerByEmail(authentication.getName());

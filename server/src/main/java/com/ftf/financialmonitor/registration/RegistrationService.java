@@ -1,6 +1,7 @@
 package com.ftf.financialmonitor.registration;
 
 import com.ftf.financialmonitor.customer.CustomerService;
+import com.ftf.financialmonitor.customer.CustomerUserDetails;
 import com.ftf.financialmonitor.email.EmailSender;
 import com.ftf.financialmonitor.exception.EmailAlreadyConfirmedException;
 import com.ftf.financialmonitor.exception.RequestValidationException;
@@ -8,20 +9,23 @@ import com.ftf.financialmonitor.exception.ResourceNotFoundException;
 import com.ftf.financialmonitor.exception.TokenExpiredException;
 import com.ftf.financialmonitor.registration.token.ConfirmationToken;
 import com.ftf.financialmonitor.registration.token.ConfirmationTokenService;
+import com.ftf.financialmonitor.security.jwt.JwtService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 
 @Service
 @AllArgsConstructor
 public class RegistrationService {
-
     private final CustomerService customerService;
     private final EmailValidator emailValidator;
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailSender emailSender;
+    private final JwtService jwtService;
 
     @Transactional
     public String register(RegistrationRequest request) {
@@ -30,16 +34,15 @@ public class RegistrationService {
         }
 
         customerService.signUpCustomer(request);
-
-        return sendConfirmationEmail(request);
+        sendConfirmationEmail(request);
+        UserDetails userDetails = new CustomerUserDetails(request.email(), request.password());
+        return jwtService.generateJwt(new HashMap<>(), userDetails);
     }
 
-    public String sendConfirmationEmail(RegistrationRequest request){
+    public void sendConfirmationEmail(RegistrationRequest request){
         String token = confirmationTokenService.generateAndSaveTokenForCustomer(request);
         String link = "http://localhost:8090/api/v1/registration/confirm?token=" + token;
         emailSender.send(request.email(), emailSender.buildEmail(request.firstName(), link));
-
-        return "A confirmation email was sent";
     }
 
     @Transactional
@@ -62,5 +65,4 @@ public class RegistrationService {
 
         return "confirmed";
     }
-
 }
