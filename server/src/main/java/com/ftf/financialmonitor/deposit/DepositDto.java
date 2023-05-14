@@ -16,5 +16,6 @@ public class DepositDto {
         this.money = money;
         this.percent = percent;
         this.endTime = endTime;
+        this.creationTime = LocalDateTime.now();
     }
 }
