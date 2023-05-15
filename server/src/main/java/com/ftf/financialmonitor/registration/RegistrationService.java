@@ -42,7 +42,7 @@ public class RegistrationService {
     public void sendConfirmationEmail(RegistrationRequest request){
         String token = confirmationTokenService.generateAndSaveTokenForCustomer(request);
         String link = "http://localhost:8090/api/v1/registration/confirm?token=" + token;
-        emailSender.send(request.email(), emailSender.buildEmail(request.firstName(), link));
+        emailSender.send(request.email(), emailSender.buildEmail(request.email(), link));
     }
 
     @Transactional
