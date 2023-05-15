@@ -10,6 +10,8 @@ export const Colors = {
   inputTextColor: '#717171',
   inputMainText: ' #6B6B6B',
   inputMainColor: '#CCD0F3',
+  loginFalseTxt: '#F8F8F8',
+  loginFalseBg: '#EF4141',
 };
 
 const overrides = {

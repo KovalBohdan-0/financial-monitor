@@ -9,6 +9,8 @@ import SignUp from './SignUp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import MainText from '../components/MainText';
 function LogIn() {
+  const userEmail = '';
+  const userPassword = '';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [seePassword, setSeePassword] = useState(false);
@@ -46,7 +48,6 @@ function LogIn() {
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       errors.email = 'Invalid email address';
     }
-
     // Validate password
     const passwordErrors = validatePassword(password);
     if (passwordErrors.length > 0) {
@@ -60,7 +61,9 @@ function LogIn() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log('Log in successful');
+      if (userEmail == email || userPassword == password) {
+        console.log('Log in successful');
+      }
     }
   };
 
@@ -175,6 +178,26 @@ function LogIn() {
           <img src={People} alt='' />
         </Box>
       </Box>
+      {email !== userEmail && password !== userPassword ? (
+        <Box
+          sx={{
+            position: 'absolute',
+            width: '100vw',
+            top: '0',
+            left: '0',
+            backgroundColor: Colors.loginFalseBg,
+            fontFamily: 'Rowdies, sans-serif',
+            fontSize: '22px',
+            color: Colors.loginFalseTxt,
+            display: 'grid',
+            placeItems: 'center',
+            padding: '17px 83px',
+          }}
+        >
+          Нам не вдалося знайти обліковий запис. Перевірте своє ім'я користувача
+          та пароль і повторіть спробу.
+        </Box>
+      ) : null}
     </Box>
   );
 }
