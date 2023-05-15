@@ -14,22 +14,44 @@ function LogIn() {
   const [seePassword, setSeePassword] = useState(false);
   const [errors, setErrors] = useState({});
 
+  const validatePassword = (password) => {
+    const errors = [];
+
+    if (password.length < 6) {
+      errors.push('Password must be at least 6 characters long');
+    }
+
+    if (!/\d/.test(password)) {
+      errors.push('Password must contain at least one digit');
+    }
+
+    if (!/[a-zA-Z]/.test(password)) {
+      errors.push('Password must contain at least one letter');
+    }
+
+    if (!/[!@#$%^&*]/.test(password)) {
+      errors.push(
+        'Password must contain at least one special character (!@#$%^&*)'
+      );
+    }
+
+    return errors;
+  };
   const validateForm = () => {
     const errors = {};
+
     // Validate email
     if (!email) {
       errors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       errors.email = 'Invalid email address';
     }
-    // Validate password
-    if (!password) {
-      errors.password = 'Password is required';
-    } else if (password.length < 6) {
-      errors.password = 'Password must be at least 6 characters long';
-    }
-    // Validate password confirmation
 
+    // Validate password
+    const passwordErrors = validatePassword(password);
+    if (passwordErrors.length > 0) {
+      errors.password = passwordErrors;
+    }
     setErrors(errors);
     // Return true if there are no errors
     return Object.keys(errors).length === 0;
@@ -38,7 +60,7 @@ function LogIn() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log('Registration successful');
+      console.log('Log in successful');
     }
   };
 
@@ -143,7 +165,7 @@ function LogIn() {
               </Box>
               <AuthorBtn
                 type='submit'
-                text='Register'
+                text='Log in'
                 sx={{ marginTop: '70px', marginLeft: '75px' }}
               ></AuthorBtn>
             </form>

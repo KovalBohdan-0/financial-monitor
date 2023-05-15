@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { Box, Typography, TextField } from '@mui/material';
 import { Colors } from '../styles';
-import AuthorBtn from '../components/ButtonSubmit';
 import { Link } from 'react-router-dom';
 import LogIn from './LogIn';
 import Logo from '/logo.svg';
 import People from '/people.png';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import MainText from '../components/MainText';
+import TransitionsModal from '../components/Modal';
+import AuthorBtn from '../components/ButtonSubmit';
 
 function SignUp() {
   const [email, setEmail] = useState('');
@@ -15,28 +16,54 @@ function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [seePassword, setSeePassword] = useState(false);
   const [errors, setErrors] = useState({});
+  const validatePassword = (password) => {
+    const errors = [];
 
+    if (password.length < 6) {
+      errors.push('Password must be at least 6 characters long');
+    }
+
+    if (!/\d/.test(password)) {
+      errors.push('Password must contain at least one digit');
+    }
+
+    if (!/[a-zA-Z]/.test(password)) {
+      errors.push('Password must contain at least one letter');
+    }
+
+    if (!/[!@#$%^&*]/.test(password)) {
+      errors.push(
+        'Password must contain at least one special character (!@#$%^&*)'
+      );
+    }
+
+    return errors;
+  };
   const validateForm = () => {
     const errors = {};
+
     // Validate email
     if (!email) {
       errors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       errors.email = 'Invalid email address';
     }
+
     // Validate password
-    if (!password) {
-      errors.password = 'Password is required';
-    } else if (password.length < 6) {
-      errors.password = 'Password must be at least 6 characters long';
+    const passwordErrors = validatePassword(password);
+    if (passwordErrors.length > 0) {
+      errors.password = passwordErrors;
     }
+
     // Validate password confirmation
     if (!confirmPassword) {
       errors.confirmPassword = 'Please confirm your password';
     } else if (password !== confirmPassword) {
       errors.confirmPassword = 'Passwords do not match';
     }
+
     setErrors(errors);
+
     // Return true if there are no errors
     return Object.keys(errors).length === 0;
   };
@@ -171,11 +198,20 @@ function SignUp() {
                   }}
                 />
               </Box>
-              <AuthorBtn
-                type='submit'
-                text='Register'
-                sx={{ marginTop: '70px', marginLeft: '75px' }}
-              ></AuthorBtn>
+              {email &&
+              password &&
+              confirmPassword &&
+              Object.keys(errors).length === 0 ? (
+                <TransitionsModal
+                  sx={{ marginTop: '70px', marginLeft: '75px' }}
+                />
+              ) : (
+                <AuthorBtn
+                  type='submit'
+                  text='Sign Up'
+                  sx={{ marginTop: '70px', marginLeft: '75px' }}
+                />
+              )}
             </form>
           </Box>
         </Box>

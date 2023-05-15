@@ -1,4 +1,5 @@
 import { Typography } from '@mui/material';
+import PropTypes from 'prop-types';
 
 function MainText({ value1, value2 = null }) {
   return (
@@ -18,5 +19,10 @@ function MainText({ value1, value2 = null }) {
     </>
   );
 }
+
+MainText.propTypes = {
+  value1: PropTypes.string.isRequired,
+  value2: PropTypes.string,
+};
 
 export default MainText;

@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-
+import PropTypes from 'prop-types';
 function MyCardText({ text }) {
   return (
     <Typography
@@ -11,5 +11,7 @@ function MyCardText({ text }) {
     </Typography>
   );
 }
-
+MyCardText.propTypes = {
+  text: PropTypes.string.isRequired,
+};
 export default MyCardText;

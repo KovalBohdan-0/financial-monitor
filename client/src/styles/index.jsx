@@ -5,6 +5,7 @@ export const Colors = {
   secondary: 'rgba(187, 193, 243, 0.7)',
   notActive: 'rgba(53, 59, 110, 0.81)',
   white: '#fff',
+  modalBackground: '#F4F4F4',
   black: '#000',
   inputTextColor: '#717171',
   inputMainText: ' #6B6B6B',
@@ -23,6 +24,7 @@ const overrides = {
       main: Colors.inputTextColor,
     },
   },
+
   components: {
     MuiDrawer: {
       styleOverrides: {
