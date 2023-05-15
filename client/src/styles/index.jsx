@@ -7,6 +7,8 @@ export const Colors = {
   white: '#fff',
   black: '#000',
   inputTextColor: '#717171',
+  inputMainText: ' #6B6B6B',
+  inputMainColor: '#CCD0F3',
 };
 
 const overrides = {

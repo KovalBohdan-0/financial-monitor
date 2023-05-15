@@ -4,8 +4,8 @@ import { Colors } from '../styles';
 import AuthorBtn from '../components/ButtonSubmit';
 import { Link } from 'react-router-dom';
 import LogIn from './LogIn';
-import Logo from '../../public/logo.svg';
-import People from '../../public/people.png';
+import Logo from '/logo.svg';
+import People from '/people.png';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import MainText from '../components/MainText';
 
@@ -67,7 +67,10 @@ function SignUp() {
               marginTop: '80px',
             }}
           >
-            <MainText />
+            <MainText
+              value1='Почни вже зараз'
+              value2=' Введіть свої дані для доступу до свого облікового запису'
+            />
             <Box
               sx={{
                 display: 'flex',
@@ -140,6 +143,7 @@ function SignUp() {
                     cursor: 'pointer',
                     color: 'gray',
                     marginBottom: '-30px',
+                    marginLeft: '10px',
                   }}
                 />
               </Box>
@@ -163,6 +167,7 @@ function SignUp() {
                     cursor: 'pointer',
                     color: 'gray',
                     marginBottom: '-30px',
+                    marginLeft: '10px',
                   }}
                 />
               </Box>

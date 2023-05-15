@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import Logo from '../../public/logo.svg';
-import People from '../../public/people.png';
+import Logo from '/logo.svg';
+import People from '/people.png';
 import { Box, Typography, TextField } from '@mui/material';
 import { Colors } from '../styles';
 import AuthorBtn from '../components/ButtonSubmit';
@@ -61,7 +61,10 @@ function LogIn() {
               marginTop: '80px',
             }}
           >
-            <MainText />
+            <MainText
+              value1='Почни вже зараз'
+              value2=' Введіть свої дані для доступу до свого облікового запису'
+            />
             <Box
               sx={{
                 display: 'flex',
@@ -125,7 +128,7 @@ function LogIn() {
                   helperText={errors.password}
                   sx={{
                     width: '300px',
-                    fontFamily: 'Roboto', // Set the font to Inter
+                    fontFamily: 'Inter', // Set the font to Inter
                   }}
                 />
                 <VisibilityIcon
@@ -134,6 +137,7 @@ function LogIn() {
                     cursor: 'pointer',
                     color: 'gray',
                     marginBottom: '-30px',
+                    marginLeft: '10px',
                   }}
                 />
               </Box>
