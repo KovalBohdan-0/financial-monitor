@@ -22,7 +22,7 @@ public class IncomeController {
     }
 
     @PostMapping
-    public void addIncomes(@RequestBody IncomeDto incomeDto) {
+    public void addIncome(@RequestBody IncomeDto incomeDto) {
         incomeService.addIncome(incomeDto);
     }
 

@@ -1,4 +1,4 @@
-package com.ftf.financialmonitor.expense;
+package com.ftf.financialmonitor.credit;
 
 import com.ftf.financialmonitor.customer.Customer;
 import com.ftf.financialmonitor.customer.CustomerService;
@@ -13,52 +13,53 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
-public class ExpenseService {
-    private ExpenseRepository expenseRepository;
+public class CreditService {
+    private CreditRepository creditRepository;
     private CustomerService customerService;
 
-    public Expense getExpenseById(Long id) {
-        return expenseRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Expense not found"));
+    public Credit getCreditById(Long id) {
+        return creditRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Credit not found"));
     }
 
-    public List<Expense> getAllExpenses() {
+    public List<Credit> getAllCredits() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Customer customer = customerService.getCustomerByEmail(authentication.getName());
-        return expenseRepository.findAllByCustomerId(customer.getId());
+        return creditRepository.findAllByCustomerId(customer.getId());
     }
 
     @Transactional
-    public void addExpense(ExpenseDto expenseDto) {
+    public void addCredit(CreditDto CreditDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Customer customer = customerService.getCustomerByEmail(authentication.getName());
-        Expense expense = expenseDtoToEntity(expenseDto);
-        expense.setCustomerId(customer.getId());
-        expenseRepository.save(expense);
+        Credit credit = creditDtoToEntity(CreditDto);
+        credit.setCustomerId(customer.getId());
+        creditRepository.save(credit);
     }
 
     @Transactional
-    public void updateExpense(Expense expense) {
-        expenseRepository.save(expense);
+    public void updateCredit(Credit credit) {
+        creditRepository.save(credit);
     }
 
     @Transactional
-    public void deleteExpense(Long id) {
-        expenseRepository.delete(getExpenseById(id));
+    public void deleteCredit(Long id) {
+        creditRepository.delete(getCreditById(id));
     }
 
     @Transactional
-    public void deleteAllExpensesByUserId() {
+    public void deleteAllCreditsByUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Customer customer = customerService.getCustomerByEmail(authentication.getName());
-        expenseRepository.deleteAllByCustomerId(customer.getId());
+        creditRepository.deleteAllByCustomerId(customer.getId());
     }
 
-    private Expense expenseDtoToEntity(ExpenseDto expenseDto) {
-        return Expense.builder()
-                .money(expenseDto.getMoney())
-                .description(expenseDto.getDescription())
-                .creationTime(expenseDto.getCreationTime())
+    private Credit creditDtoToEntity(CreditDto creditDto) {
+        return Credit.builder()
+                .money(creditDto.getMoney())
+                .percent(creditDto.getPercent())
+                .creationTime(creditDto.getCreationTime())
+                .endTime(creditDto.getEndTime())
                 .build();
     }
 }

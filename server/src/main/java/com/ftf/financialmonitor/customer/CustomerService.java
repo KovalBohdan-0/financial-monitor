@@ -6,6 +6,7 @@ import com.ftf.financialmonitor.registration.RegistrationRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
@@ -28,6 +29,7 @@ public class CustomerService {
                 ));
     }
 
+    @Transactional
     public void signUpCustomer(RegistrationRequest request) {
         if (customerRepository.existsByEmail(request.email())){
             throw new DuplicateResourceException(
