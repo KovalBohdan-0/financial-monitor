@@ -1,16 +1,15 @@
 import Logo from '/logo.svg';
 import { Box } from '@mui/material';
 import MainText from '../components/MainText';
-import MainInput from '../components/MainInput';
+// import MainInput from '../components/MainInput';
 import Person from '/Person-Pose.svg';
 
-import { useState } from 'react';
 import MainNavigation from '../components/MainNavigation';
 import MyCardText from '../components/MyCardText';
 import Diagram from '../components/Diagram';
-import BarDiagram from '../components/BarDiagram';
+import AnalitycsBtn from '../components/AnalyticsBtn';
 function Main() {
-  const [search, setSearch] = useState('');
+  // const [search, setSearch] = useState('');
   return (
     <>
       <Box m='0 auto' width='1280px' padding='43px 66px'>
@@ -20,13 +19,13 @@ function Main() {
           </Box>
           <Box display={'flex'} alignItems={'center'} gap='200px'>
             <MainText value1='Головна' />
-            <Box>
+            {/* <Box>
               <MainInput
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder='Знайти...'
               />
-            </Box>
+            </Box> */}
           </Box>
         </Box>
         <Box display={'flex'} gap={'17px'} mt='36px'>
@@ -37,9 +36,10 @@ function Main() {
             </Box>
           </Box>
           <Box>
-            <MyCardText text='Мої карти' />
+            <MyCardText text='Моя карта' />
+            <MyCardText text='Аналітика' />
+            <AnalitycsBtn />
             <Diagram />
-            <BarDiagram />
           </Box>
         </Box>
       </Box>

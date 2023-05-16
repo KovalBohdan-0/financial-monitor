@@ -12,6 +12,8 @@ export const Colors = {
   inputMainColor: '#CCD0F3',
   loginFalseTxt: '#F8F8F8',
   loginFalseBg: '#EF4141',
+  diagramColorMain: '#495AF0',
+  diagramColorSecondary: '#D897E6',
 };
 
 const overrides = {
