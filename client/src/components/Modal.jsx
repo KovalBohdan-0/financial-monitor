@@ -9,6 +9,8 @@ import AuthorBtn from './ButtonSubmit';
 import { Colors } from '../styles';
 import PersonModal from '/Person-Modal.svg';
 import ConfirmIcon from '/confirmation.svg';
+import PropTypes from 'prop-types';
+import axios from 'axios';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -20,14 +22,17 @@ const style = {
   width: '765px',
   height: '635px',
 };
-
+TransitionsModal.propTypes = {
+  email: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
+};
 export default function TransitionsModal(props) {
   const [sendEmail, setSendEmail] = useState(false);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     handleOpen();
   };
@@ -102,7 +107,32 @@ export default function TransitionsModal(props) {
                   Підтвердіть пошту, щоб завершити створення профілю
                 </Typography>
                 <Button
-                  onClick={() => setSendEmail(true)}
+                  onClick={async () => {
+                    setSendEmail(true);
+                    const signup = {
+                      email: props.email,
+                      password: props.password,
+                    };
+
+                    try {
+                      const response = await axios.post(
+                        'https://financial-monitor-production.up.railway.app/api/v1/registration/sendEmail',
+                        signup,
+                        {
+                          headers: {
+                            'Content-Type': 'application/json',
+                          },
+                        }
+                      );
+                      console.log(response.status);
+                    } catch (error) {
+                      if (error.response) {
+                        console.log(error.response.data.message);
+                      } else {
+                        console.log('Error:', error.message);
+                      }
+                    }
+                  }}
                   type='submit'
                   variant='contained'
                   sx={{

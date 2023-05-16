@@ -8,37 +8,25 @@ import { Link } from 'react-router-dom';
 import SignUp from './SignUp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import MainText from '../components/MainText';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 function LogIn() {
-  const userEmail = '';
-  const userPassword = '';
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [seePassword, setSeePassword] = useState(false);
   const [errors, setErrors] = useState({});
+  const [userErrors, setUserErrors] = useState('');
 
   const validatePassword = (password) => {
     const errors = [];
-
     if (password.length < 6) {
       errors.push('Password must be at least 6 characters long');
     }
 
-    if (!/\d/.test(password)) {
-      errors.push('Password must contain at least one digit');
-    }
-
-    if (!/[a-zA-Z]/.test(password)) {
-      errors.push('Password must contain at least one letter');
-    }
-
-    if (!/[!@#$%^&*]/.test(password)) {
-      errors.push(
-        'Password must contain at least one special character (!@#$%^&*)'
-      );
-    }
-
     return errors;
   };
+
   const validateForm = () => {
     const errors = {};
 
@@ -58,11 +46,31 @@ function LogIn() {
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const login = { email, password };
     if (validateForm()) {
-      if (userEmail == email || userPassword == password) {
-        console.log('Log in successful');
+      try {
+        const response = await axios.post(
+          'https://financial-monitor-production.up.railway.app/api/v1/login',
+          login,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+        console.log(response.data);
+
+        // Navigate to MainPage.js
+        navigate('/main');
+      } catch (error) {
+        if (error.response) {
+          console.log(error.response.data.message);
+          setUserErrors(error.response.data.message);
+        } else {
+          console.log('Error:', error.message);
+        }
       }
     }
   };
@@ -178,7 +186,8 @@ function LogIn() {
           <img src={People} alt='' />
         </Box>
       </Box>
-      {email !== userEmail && password !== userPassword ? (
+
+      {userErrors ? (
         <Box
           sx={{
             position: 'absolute',

@@ -7,6 +7,7 @@ import Logo from '/logo.svg';
 import People from '/people.png';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import MainText from '../components/MainText';
+import axios from 'axios';
 import TransitionsModal from '../components/Modal';
 import AuthorBtn from '../components/ButtonSubmit';
 
@@ -15,26 +16,13 @@ function SignUp() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [seePassword, setSeePassword] = useState(false);
-  const [errors, setErrors] = useState({});
+  const [message, setMessage] = useState('');
+  const [errors, setErrors] = useState({ '': '' });
   const validatePassword = (password) => {
     const errors = [];
 
     if (password.length < 6) {
       errors.push('Password must be at least 6 characters long');
-    }
-
-    if (!/\d/.test(password)) {
-      errors.push('Password must contain at least one digit');
-    }
-
-    if (!/[a-zA-Z]/.test(password)) {
-      errors.push('Password must contain at least one letter');
-    }
-
-    if (!/[!@#$%^&*]/.test(password)) {
-      errors.push(
-        'Password must contain at least one special character (!@#$%^&*)'
-      );
     }
 
     return errors;
@@ -68,10 +56,30 @@ function SignUp() {
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log('Registration successful');
+      const signup = { email, password };
+
+      try {
+        const response = await axios.post(
+          'https://financial-monitor-production.up.railway.app/api/v1/registration',
+          signup,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+        console.log(response.data);
+      } catch (error) {
+        if (error.response) {
+          setMessage(error.response.data.message);
+          console.log(error.response.data.message);
+        } else {
+          console.log('Error:', error.message);
+        }
+      }
     }
   };
 
@@ -141,8 +149,8 @@ function SignUp() {
                   type='email'
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  error={Boolean(errors.email)}
-                  helperText={errors.email}
+                  error={Boolean(errors.email) || Boolean(message)}
+                  helperText={errors.email || message}
                   sx={{
                     width: '300px',
                     margin: '60px 0 45px 0 ',
@@ -204,6 +212,8 @@ function SignUp() {
               Object.keys(errors).length === 0 ? (
                 <TransitionsModal
                   sx={{ marginTop: '70px', marginLeft: '75px' }}
+                  email={email}
+                  password={password}
                 />
               ) : (
                 <AuthorBtn
