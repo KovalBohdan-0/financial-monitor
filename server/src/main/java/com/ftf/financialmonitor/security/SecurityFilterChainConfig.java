@@ -21,7 +21,8 @@ public class SecurityFilterChainConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .cors().disable()
+                .cors()
+                .and()
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/api/v1/credit").authenticated()
                         .requestMatchers("/api/v1/deposit").authenticated()
