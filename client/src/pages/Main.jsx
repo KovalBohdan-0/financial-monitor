@@ -10,6 +10,7 @@ import Diagram from '../components/Diagram';
 import AnalitycsBtn from '../components/AnalyticsBtn';
 function Main() {
   // const [search, setSearch] = useState('');
+  
   return (
     <>
       <Box m='0 auto' width='1280px' padding='43px 66px'>
