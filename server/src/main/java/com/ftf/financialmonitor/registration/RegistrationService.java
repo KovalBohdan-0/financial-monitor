@@ -28,20 +28,20 @@ public class RegistrationService {
     private final JwtService jwtService;
 
     @Transactional
-    public String register(RegistrationRequest request) {
+    public String register(RegistrationRequest request, String host) {
         if(!emailValidator.test(request.email())){
             throw new RequestValidationException("email \"%s\" not valid".formatted(request.email()));
         }
 
         customerService.signUpCustomer(request);
-        sendConfirmationEmail(request);
+        sendConfirmationEmail(request, host);
         UserDetails userDetails = new CustomerUserDetails(request.email(), request.password());
         return jwtService.generateJwt(new HashMap<>(), userDetails);
     }
 
-    public void sendConfirmationEmail(RegistrationRequest request){
+    public void sendConfirmationEmail(RegistrationRequest request, String host){
         String token = confirmationTokenService.generateAndSaveTokenForCustomer(request);
-        String link = "http://localhost:8090/api/v1/registration/confirm?token=" + token;
+        String link =  "https://" + host + "/api/v1/registration/confirm?token=" + token;
         emailSender.send(request.email(), emailSender.buildEmail(request.email(), link));
     }
 
