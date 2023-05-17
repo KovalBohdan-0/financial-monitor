@@ -14,7 +14,7 @@ public class RegistrationController {
         return registrationService.register(request, host);
     }
 
-    @PostMapping("/sendEmail")
+    @PostMapping("/send-email-again")
     public void sendEmailAgain(@RequestBody RegistrationRequest request, @RequestHeader String host) {
         registrationService.sendConfirmationEmail(request, host);
     }
