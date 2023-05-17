@@ -18,14 +18,14 @@ public class CustomerService {
     public Customer getCustomerByEmail(String email) {
         return customerRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        "customer with email %s not found".formatted(email)
+                        "customer with email \"%s\" not found".formatted(email)
                 ));
     }
 
     public Customer getCustomerById(Long id) {
         return customerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        "customer with email %s not found".formatted(id)
+                        "customer with email \"%s\" not found".formatted(id)
                 ));
     }
 
@@ -33,7 +33,7 @@ public class CustomerService {
     public void signUpCustomer(RegistrationRequest request) {
         if (customerRepository.existsByEmail(request.email())){
             throw new DuplicateResourceException(
-                    "email %s already taken".formatted(request.email())
+                    "email \"%s\" has been already taken".formatted(request.email())
             );
         }
 
