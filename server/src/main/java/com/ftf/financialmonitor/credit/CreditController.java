@@ -45,4 +45,9 @@ public class CreditController {
     public CreditInfo getCreditInfo() {
         return creditService.getCreditInfo();
     }
+
+    @GetMapping("/info")
+    public CreditInfo getCreditInfo() {
+        return creditService.getCreditInfo();
+    }
 }
