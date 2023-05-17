@@ -58,7 +58,7 @@ public class DepositService {
     }
 
     public DepositInfo getDepositInfo() {
-        List<Deposit> deposits = getAllDeposits();
+        List<Deposit> deposits = getAllDepositsOfCustomer();
 
         if (deposits.size() != 0) {
             BigDecimal sumOfIncome = new BigDecimal(0);

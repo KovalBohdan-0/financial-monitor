@@ -58,7 +58,7 @@ public class CreditService {
     }
 
     public CreditInfo getCreditInfo() {
-        List<Credit> credits = getAllCredits();
+        List<Credit> credits = getAllCreditsOfCustomer();
 
         if (credits.size() != 0) {
             BigDecimal sumOfCredits = new BigDecimal(0);
