@@ -14,23 +14,23 @@ const Item = styled(Paper)(() => ({
   fontSize: '17px',
 }));
 
-const ItemLink = styled(Link)(({ isSelected }) => ({
+const ItemLink = styled(Link)(({ isselected }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: '12px',
   fontFamily: 'Rowdies, sans-serif',
-  fontWeight: isSelected ? 'bold' : 'normal',
+  fontWeight: isselected ? 'bold' : 'normal',
 }));
 
 export default function MainNavigation() {
-  const [selectedItem, setSelectedItem] = useState('');
+  const [selectedItem, setSelectedItem] = useState('/main');
   return (
     <Box sx={{ width: 200, marginTop: '15px' }}>
       <Stack spacing='20px'>
         <Item elevation={0}>
           <ItemLink
             to='/main'
-            isSelected={selectedItem === '/main'}
+            isselected={selectedItem === '/main'}
             onClick={() => setSelectedItem('/main')}
           >
             <img src={HomeIcon} alt='HomeIcon' /> Головна
@@ -39,7 +39,7 @@ export default function MainNavigation() {
         <Item elevation={0}>
           <ItemLink
             to='/stats'
-            isSelected={selectedItem === '/stats'}
+            isselected={selectedItem === '/stats'}
             onClick={() => setSelectedItem('/stats')}
           >
             <img src={StatsIcon} alt='StatsIcon' />
@@ -49,7 +49,7 @@ export default function MainNavigation() {
         <Item elevation={0}>
           <ItemLink
             to='/transactions'
-            isSelected={selectedItem === '/transactions'}
+            isselected={selectedItem === '/transactions'}
             onClick={() => setSelectedItem('/transactions')}
           >
             <img src={TransactIcon} alt='TransactIcon' />
@@ -59,7 +59,7 @@ export default function MainNavigation() {
         <Item elevation={0}>
           <ItemLink
             to='/settings'
-            isSelected={selectedItem === '/settings'}
+            isselected={selectedItem === '/settings'}
             onClick={() => setSelectedItem('/settings')}
           >
             <img src={SettingIcon} alt='SettingIcon' />
@@ -69,7 +69,7 @@ export default function MainNavigation() {
         <Item elevation={0}>
           <ItemLink
             to='/zvit'
-            isSelected={selectedItem === '/zvit'}
+            isselected={selectedItem === '/zvit'}
             onClick={() => setSelectedItem('/zvit')}
           >
             <img src={ZvitIcon} alt='ZvitIcon' />

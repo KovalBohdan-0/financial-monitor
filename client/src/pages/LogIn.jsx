@@ -60,6 +60,7 @@ function LogIn() {
             },
           }
         );
+        localStorage.setItem('responseData', JSON.stringify(response.data));
         console.log(response.data);
 
         // Navigate to MainPage.js

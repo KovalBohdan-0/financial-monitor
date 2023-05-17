@@ -27,7 +27,6 @@ TransitionsModal.propTypes = {
   password: PropTypes.string.isRequired,
 };
 export default function TransitionsModal(props) {
-  const [sendEmail, setSendEmail] = useState(false);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -67,87 +66,64 @@ export default function TransitionsModal(props) {
               <img src={PersonModal} alt='PersonModal' />
             </Box>
 
-            {sendEmail ? (
-              <Box textAlign='center' mt='58px'>
-                <Typography
-                  fontSize='28px'
-                  fontFamily={'Rowdies, sans-serif'}
-                  fontWeight={700}
-                >
-                  Лист із підтвердженням надіслано!
-                </Typography>
-                <Typography
-                  mt='15px'
-                  fontSize='18px'
-                  fontFamily={'Rowdies, sans-serif'}
-                >
-                  Перевірте папку вхідних повідомлень і дотримуйтеся інструкцій
-                </Typography>
-                <img
-                  onClick={handleClose}
-                  src={ConfirmIcon}
-                  alt='ConfirmIcon'
-                  style={{ marginTop: '50px', cursor: 'pointer' }}
-                />
+            <Box textAlign='center' mt='10px'>
+              <Typography
+                fontSize='28px'
+                fontFamily={'Rowdies, sans-serif'}
+                fontWeight={700}
+              >
+                Лист із підтвердженням надіслано!
+              </Typography>
+              <Typography
+                mt='15px'
+                fontSize='18px'
+                fontFamily={'Rowdies, sans-serif'}
+              >
+                Перевірте папку вхідних повідомлень і дотримуйтеся інструкцій
+              </Typography>
+              <Box mt='20px'>
+                <img src={ConfirmIcon} alt='ConfirmIcon' />
               </Box>
-            ) : (
-              <Box textAlign='center' mt='58px'>
-                <Typography
-                  fontSize='28px'
-                  fontFamily={'Rowdies, sans-serif'}
-                  fontWeight={700}
-                >
-                  Підтвердьте електронну адресу
-                </Typography>
-                <Typography
-                  mt='15px'
-                  fontSize='18px'
-                  fontFamily={'Rowdies, sans-serif'}
-                >
-                  Підтвердіть пошту, щоб завершити створення профілю
-                </Typography>
-                <Button
-                  onClick={async () => {
-                    setSendEmail(true);
-                    const signup = {
-                      email: props.email,
-                      password: props.password,
-                    };
+              <Button
+                onClick={async () => {
+                  const signup = {
+                    email: props.email,
+                    password: props.password,
+                  };
 
-                    try {
-                      const response = await axios.post(
-                        'https://financial-monitor-production.up.railway.app/api/v1/registration/sendEmail',
-                        signup,
-                        {
-                          headers: {
-                            'Content-Type': 'application/json',
-                          },
-                        }
-                      );
-                      console.log(response.status);
-                    } catch (error) {
-                      if (error.response) {
-                        console.log(error.response.data.message);
-                      } else {
-                        console.log('Error:', error.message);
+                  try {
+                    const response = await axios.post(
+                      'https://financial-monitor-production.up.railway.app/api/v1/registration/sendEmail',
+                      signup,
+                      {
+                        headers: {
+                          'Content-Type': 'application/json',
+                        },
                       }
+                    );
+                    console.log(response.status);
+                  } catch (error) {
+                    if (error.response) {
+                      console.log(error.response.data.message);
+                    } else {
+                      console.log('Error:', error.message);
                     }
-                  }}
-                  type='submit'
-                  variant='contained'
-                  sx={{
-                    fontFamily: 'Rowdies, sans-serif',
-                    padding: '27px 49px',
-                    fontSize: '20px',
-                    marginTop: '71px',
-                    borderRadius: '50px',
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  підтвердити електронну адресу
-                </Button>
-              </Box>
-            )}
+                  }
+                }}
+                type='submit'
+                variant='contained'
+                sx={{
+                  fontFamily: 'Rowdies, sans-serif',
+                  padding: '17px 29px',
+                  fontSize: '20px',
+                  marginTop: '20px',
+                  borderRadius: '50px',
+                  textTransform: 'uppercase',
+                }}
+              >
+                Відправити лист повторно
+              </Button>
+            </Box>
           </Box>
         </Fade>
       </Modal>

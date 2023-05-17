@@ -14,6 +14,8 @@ import AuthorBtn from '../components/ButtonSubmit';
 function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [surname, setSurname] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [seePassword, setSeePassword] = useState(false);
   const [message, setMessage] = useState('');
@@ -29,6 +31,13 @@ function SignUp() {
   };
   const validateForm = () => {
     const errors = {};
+    if (firstName.trim() === '') {
+      errors.name = 'Please enter your name';
+    }
+
+    if (surname.trim() === '') {
+      errors.surname = 'Please enter your surname';
+    }
 
     // Validate email
     if (!email) {
@@ -59,7 +68,7 @@ function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      const signup = { email, password };
+      const signup = { firstName, surname, email, password };
 
       try {
         const response = await axios.post(
@@ -71,6 +80,7 @@ function SignUp() {
             },
           }
         );
+        localStorage.setItem('responseData', JSON.stringify(response.data));
         console.log(response.data);
       } catch (error) {
         if (error.response) {
@@ -144,6 +154,37 @@ function SignUp() {
               <Box>
                 <TextField
                   variant='standard'
+                  label='Name'
+                  color='third'
+                  type='text'
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  error={Boolean(errors.firstName)}
+                  helperText={errors.firstName}
+                  sx={{
+                    width: '300px',
+                    margin: '60px 0 45px 0 ',
+                  }}
+                />
+              </Box>
+              <Box>
+                <TextField
+                  variant='standard'
+                  label='Surname'
+                  color='third'
+                  type='text'
+                  value={surname}
+                  onChange={(e) => setSurname(e.target.value)}
+                  error={Boolean(errors.surname)}
+                  helperText={errors.surname}
+                  sx={{
+                    width: '300px',
+                  }}
+                />
+              </Box>
+              <Box>
+                <TextField
+                  variant='standard'
                   label='Email'
                   color='third'
                   type='email'
@@ -153,7 +194,7 @@ function SignUp() {
                   helperText={errors.email || message}
                   sx={{
                     width: '300px',
-                    margin: '60px 0 45px 0 ',
+                    margin: '45px 0 45px 0 ',
                   }}
                 />
               </Box>

@@ -8,15 +8,16 @@ import MainNavigation from '../components/MainNavigation';
 import MyCardText from '../components/MyCardText';
 import Diagram from '../components/Diagram';
 import AnalitycsBtn from '../components/AnalyticsBtn';
+import CardInfo from '../components/CardInfo';
 function Main() {
   // const [search, setSearch] = useState('');
-  
+
   return (
     <>
       <Box m='0 auto' width='1280px' padding='43px 66px'>
         <Box display={'flex'} gap={'60px'} alignItems={'center'}>
           <Box>
-            <img src={Logo} alt='' />
+            <img src={Logo} alt='Logo' />
           </Box>
           <Box display={'flex'} alignItems={'center'} gap='200px'>
             <MainText value1='Головна' />
@@ -38,6 +39,7 @@ function Main() {
           </Box>
           <Box>
             <MyCardText text='Моя карта' />
+            <CardInfo sx={{ margin: '40px 0' }} />
             <MyCardText text='Аналітика' />
             <AnalitycsBtn />
             <Diagram />
