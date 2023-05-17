@@ -11,4 +11,11 @@ public class DepositDto {
     private BigDecimal percent;
     private LocalDateTime creationTime;
     private LocalDateTime endTime;
+
+    public DepositDto(BigDecimal money, BigDecimal percent, LocalDateTime endTime) {
+        this.money = money;
+        this.percent = percent;
+        this.endTime = endTime;
+        this.creationTime = LocalDateTime.now();
+    }
 }

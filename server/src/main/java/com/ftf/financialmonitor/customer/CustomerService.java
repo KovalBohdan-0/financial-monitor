@@ -42,6 +42,8 @@ public class CustomerService {
         Customer customer = Customer.builder()
                 .email(request.email())
                 .password(encodedPassword)
+                .firstname(request.firstname())
+                .surname(request.surname())
                 .build();
 
         customerRepository.save(customer);

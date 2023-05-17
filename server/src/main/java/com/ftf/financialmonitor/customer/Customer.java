@@ -29,6 +29,9 @@ public class Customer implements UserDetails {
             generator = "customer_id_sequence"
     )
     private Long id;
+    private String firstname;
+
+    private String surname;
 
     @Column(nullable = false)
     private String email;
