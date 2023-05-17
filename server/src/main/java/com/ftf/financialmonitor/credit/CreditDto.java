@@ -11,11 +11,4 @@ public class CreditDto {
     private BigDecimal percent;
     private LocalDateTime creationTime;
     private LocalDateTime endTime;
-
-    public CreditDto(BigDecimal money, BigDecimal percent, LocalDateTime endTime) {
-        this.money = money;
-        this.percent = percent;
-        this.endTime = endTime;
-        this.creationTime = LocalDateTime.now();
-    }
 }

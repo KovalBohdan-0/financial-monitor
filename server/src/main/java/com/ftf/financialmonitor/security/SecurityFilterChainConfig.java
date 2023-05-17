@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
@@ -20,12 +21,18 @@ public class SecurityFilterChainConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeHttpRequests()
-                .anyRequest().permitAll()
+                .cors()
                 .and()
+                .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("/api/v1/credit").authenticated()
+                        .requestMatchers("/api/v1/deposit").authenticated()
+                        .requestMatchers("/api/v1/income").authenticated()
+                        .requestMatchers("/api/v1/expense").authenticated()
+                        .requestMatchers("/api/v1/customer").authenticated()
+                        .anyRequest().permitAll()
+                )
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-
 }
