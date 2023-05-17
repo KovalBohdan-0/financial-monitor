@@ -22,7 +22,7 @@ public class ExpenseService {
                 .orElseThrow(() -> new ResourceNotFoundException("Expense not found"));
     }
 
-    public List<Expense> getAllExpenses() {
+    public List<Expense> getAllExpensesOfCustomer() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Customer customer = customerService.getCustomerByEmail(authentication.getName());
         return expenseRepository.findAllByCustomerId(customer.getId());
@@ -43,12 +43,12 @@ public class ExpenseService {
     }
 
     @Transactional
-    public void deleteExpense(Long id) {
+    public void deleteExpenseById(Long id) {
         expenseRepository.delete(getExpenseById(id));
     }
 
     @Transactional
-    public void deleteAllExpensesByUserId() {
+    public void deleteAllExpensesOfCustomer() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Customer customer = customerService.getCustomerByEmail(authentication.getName());
         expenseRepository.deleteAllByCustomerId(customer.getId());

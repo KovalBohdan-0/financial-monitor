@@ -12,13 +12,13 @@ public class ExpenseController {
     private ExpenseService expenseService;
 
     @GetMapping("/{id}")
-    public Expense getExpense(@PathVariable Long id) {
+    public Expense getExpenseById(@PathVariable Long id) {
         return expenseService.getExpenseById(id);
     }
 
-    @GetMapping
-    public List<Expense> getExpenses() {
-        return expenseService.getAllExpenses();
+    @GetMapping("/all-by-customer")
+    public List<Expense> getAllExpensesOfCustomer() {
+        return expenseService.getAllExpensesOfCustomer();
     }
 
     @PostMapping
@@ -32,12 +32,12 @@ public class ExpenseController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteExpense(@PathVariable Long id) {
-        expenseService.deleteExpense(id);
+    public void deleteExpenseById(@PathVariable Long id) {
+        expenseService.deleteExpenseById(id);
     }
 
-    @DeleteMapping
-    public void deleteAllExpenses() {
-        expenseService.deleteAllExpensesByUserId();
+    @DeleteMapping("/all-by-customer")
+    public void deleteAllExpensesOfCustomer() {
+        expenseService.deleteAllExpensesOfCustomer();
     }
 }

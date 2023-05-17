@@ -22,7 +22,7 @@ public class CreditService {
                 .orElseThrow(() -> new ResourceNotFoundException("Credit not found"));
     }
 
-    public List<Credit> getAllCredits() {
+    public List<Credit> getAllCreditsOfCustomer() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Customer customer = customerService.getCustomerByEmail(authentication.getName());
         return creditRepository.findAllByCustomerId(customer.getId());
@@ -43,12 +43,12 @@ public class CreditService {
     }
 
     @Transactional
-    public void deleteCredit(Long id) {
+    public void deleteCreditById(Long id) {
         creditRepository.delete(getCreditById(id));
     }
 
     @Transactional
-    public void deleteAllCreditsByUserId() {
+    public void deleteAllCreditsOfCustomer() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Customer customer = customerService.getCustomerByEmail(authentication.getName());
         creditRepository.deleteAllByCustomerId(customer.getId());

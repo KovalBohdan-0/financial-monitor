@@ -22,7 +22,7 @@ public class DepositService {
                 .orElseThrow(() -> new ResourceNotFoundException("Deposit not found"));
     }
 
-    public List<Deposit> getAllDeposits() {
+    public List<Deposit> getAllDepositsOfCustomer() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Customer customer = customerService.getCustomerByEmail(authentication.getName());
         return depositRepository.findAllByCustomerId(customer.getId());
@@ -43,12 +43,12 @@ public class DepositService {
     }
 
     @Transactional
-    public void deleteDeposit(Long id) {
+    public void deleteDepositById(Long id) {
         depositRepository.delete(getDepositById(id));
     }
 
     @Transactional
-    public void deleteAllDepositsByUserId() {
+    public void deleteAllDepositsOfCustomer() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Customer customer = customerService.getCustomerByEmail(authentication.getName());
         depositRepository.deleteAllByCustomerId(customer.getId());

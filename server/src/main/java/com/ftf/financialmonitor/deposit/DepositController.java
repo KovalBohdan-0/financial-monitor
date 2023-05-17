@@ -12,13 +12,13 @@ public class DepositController {
     private DepositService depositService;
 
     @GetMapping("/{id}")
-    public Deposit getDeposit(@PathVariable Long id) {
+    public Deposit getDepositById(@PathVariable Long id) {
         return depositService.getDepositById(id);
     }
 
-    @GetMapping
-    public List<Deposit> getDeposits() {
-        return depositService.getAllDeposits();
+    @GetMapping("/all-by-customer")
+    public List<Deposit> getAllDepositsOfCustomer() {
+        return depositService.getAllDepositsOfCustomer();
     }
 
     @PostMapping
@@ -32,12 +32,12 @@ public class DepositController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteDeposit(@PathVariable Long id) {
-        depositService.deleteDeposit(id);
+    public void deleteDepositById(@PathVariable Long id) {
+        depositService.deleteDepositById(id);
     }
 
-    @DeleteMapping
-    public void deleteAllDeposits() {
-        depositService.deleteAllDepositsByUserId();
+    @DeleteMapping("/all-by-customer")
+    public void deleteAllDepositsOfCustomer() {
+        depositService.deleteAllDepositsOfCustomer();
     }
 }
