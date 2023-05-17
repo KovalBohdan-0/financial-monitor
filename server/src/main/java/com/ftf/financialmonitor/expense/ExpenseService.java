@@ -9,6 +9,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.time.YearMonth;
 import java.util.List;
 
 @AllArgsConstructor
@@ -22,10 +24,25 @@ public class ExpenseService {
                 .orElseThrow(() -> new ResourceNotFoundException("Expense not found"));
     }
 
-    public List<Expense> getAllExpenses() {
+    public List<Expense> getAllExpensesOfCustomer() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Customer customer = customerService.getCustomerByEmail(authentication.getName());
         return expenseRepository.findAllByCustomerId(customer.getId());
+    }
+
+    public BigDecimal getSumOfAllExpensesOfCustomerByMonth(YearMonth yearMonth) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Customer customer = customerService.getCustomerByEmail(authentication.getName());
+
+        double sum = expenseRepository.findAllByCustomerId(customer.getId()).stream()
+                .filter(expense -> {
+                    YearMonth expenseYearMonth = YearMonth.from(expense.getCreationTime());
+                    return expenseYearMonth.equals(yearMonth);
+                })
+                .mapToDouble(expense -> expense.getMoney().doubleValue())
+                .sum();
+
+        return BigDecimal.valueOf(sum);
     }
 
     @Transactional
@@ -43,12 +60,12 @@ public class ExpenseService {
     }
 
     @Transactional
-    public void deleteExpense(Long id) {
+    public void deleteExpenseById(Long id) {
         expenseRepository.delete(getExpenseById(id));
     }
 
     @Transactional
-    public void deleteAllExpensesByUserId() {
+    public void deleteAllExpensesOfCustomer() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Customer customer = customerService.getCustomerByEmail(authentication.getName());
         expenseRepository.deleteAllByCustomerId(customer.getId());

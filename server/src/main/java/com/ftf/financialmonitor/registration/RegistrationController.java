@@ -10,13 +10,13 @@ public class RegistrationController {
     private final RegistrationService registrationService;
 
     @PostMapping
-    public String register(@RequestBody RegistrationRequest request) {
-        return registrationService.register(request);
+    public String register(@RequestBody RegistrationRequest request, @RequestHeader String host) {
+        return registrationService.register(request, host);
     }
 
-    @PostMapping("/sendEmail")
-    public void sendEmailAgain(@RequestBody RegistrationRequest request) {
-        registrationService.sendConfirmationEmail(request);
+    @PostMapping("/send-email-again")
+    public void sendEmailAgain(@RequestBody RegistrationRequest request, @RequestHeader String host) {
+        registrationService.sendConfirmationEmail(request, host);
     }
 
     @GetMapping("/confirm")

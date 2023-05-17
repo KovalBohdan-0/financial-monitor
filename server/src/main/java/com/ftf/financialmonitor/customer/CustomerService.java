@@ -4,6 +4,8 @@ import com.ftf.financialmonitor.exception.DuplicateResourceException;
 import com.ftf.financialmonitor.exception.ResourceNotFoundException;
 import com.ftf.financialmonitor.registration.RegistrationRequest;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,14 +20,14 @@ public class CustomerService {
     public Customer getCustomerByEmail(String email) {
         return customerRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        "customer with email %s not found".formatted(email)
+                        "customer with email \"%s\" not found".formatted(email)
                 ));
     }
 
     public Customer getCustomerById(Long id) {
         return customerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        "customer with email %s not found".formatted(id)
+                        "customer with email \"%s\" not found".formatted(id)
                 ));
     }
 
@@ -33,7 +35,7 @@ public class CustomerService {
     public void signUpCustomer(RegistrationRequest request) {
         if (customerRepository.existsByEmail(request.email())){
             throw new DuplicateResourceException(
-                    "email %s already taken".formatted(request.email())
+                    "email \"%s\" has been already taken".formatted(request.email())
             );
         }
 
@@ -42,13 +44,22 @@ public class CustomerService {
         Customer customer = Customer.builder()
                 .email(request.email())
                 .password(encodedPassword)
+                .firstname(request.firstname())
+                .surname(request.surname())
                 .build();
 
         customerRepository.save(customer);
     }
 
+    public CustomerDto getCurrentCustomer() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Customer customer = getCustomerByEmail(authentication.getName());
+        return new CustomerDto(customer.getFirstname(), customer.getSurname(), customer.getEmail(), customer.isEnabled());
+    }
+
     public int enableCustomer(String email) {
         return customerRepository.enableCustomerWithEmail(email);
     }
+
 
 }

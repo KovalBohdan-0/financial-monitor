@@ -12,13 +12,13 @@ public class IncomeController {
     private IncomeService incomeService;
 
     @GetMapping("/{id}")
-    public Income getIncome(@PathVariable Long id) {
+    public Income getIncomeById(@PathVariable Long id) {
         return incomeService.getIncomeById(id);
     }
 
-    @GetMapping
-    public List<Income> getIncomes() {
-        return incomeService.getAllIncomes();
+    @GetMapping("/all-by-customer")
+    public List<Income> getAllIncomesOfCustomer() {
+        return incomeService.getAllIncomesOfCustomer();
     }
 
     @PostMapping
@@ -32,12 +32,12 @@ public class IncomeController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteIncome(@PathVariable Long id) {
-        incomeService.deleteIncome(id);
+    public void deleteIncomeById(@PathVariable Long id) {
+        incomeService.deleteIncomeById(id);
     }
 
-    @DeleteMapping
-    public void deleteAllIncomes() {
-        incomeService.deleteAllIncomesByUserId();
+    @DeleteMapping("/all-by-customer")
+    public void deleteAllIncomesOfCustomer() {
+        incomeService.deleteAllIncomesOfCustomer();
     }
 }

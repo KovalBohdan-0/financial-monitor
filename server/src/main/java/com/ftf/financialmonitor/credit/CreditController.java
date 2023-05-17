@@ -12,13 +12,13 @@ public class CreditController {
     private CreditService creditService;
 
     @GetMapping("/{id}")
-    public Credit getCredit(@PathVariable Long id) {
+    public Credit getCreditById(@PathVariable Long id) {
         return creditService.getCreditById(id);
     }
 
-    @GetMapping
-    public List<Credit> getCredits() {
-        return creditService.getAllCredits();
+    @GetMapping("/all-by-customer")
+    public List<Credit> getAllCreditsOfCustomer() {
+        return creditService.getAllCreditsOfCustomer();
     }
 
     @PostMapping
@@ -32,12 +32,22 @@ public class CreditController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCredit(@PathVariable Long id) {
-        creditService.deleteCredit(id);
+    public void deleteCreditById(@PathVariable Long id) {
+        creditService.deleteCreditById(id);
     }
 
-    @DeleteMapping
-    public void deleteAllCredits() {
-        creditService.deleteAllCreditsByUserId();
+    @DeleteMapping("/all-by-customer")
+    public void deleteAllCreditsOfCustomer() {
+        creditService.deleteAllCreditsOfCustomer();
+    }
+
+    @GetMapping("/info")
+    public CreditInfo getCreditInfo() {
+        return creditService.getCreditInfo();
+    }
+
+    @GetMapping("/info")
+    public CreditInfo getCreditInfo() {
+        return creditService.getCreditInfo();
     }
 }

@@ -9,6 +9,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.time.YearMonth;
 import java.util.List;
 
 @AllArgsConstructor
@@ -22,10 +24,25 @@ public class IncomeService {
                 .orElseThrow(() -> new ResourceNotFoundException("Income not found"));
     }
 
-    public List<Income> getAllIncomes() {
+    public List<Income> getAllIncomesOfCustomer() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Customer customer = customerService.getCustomerByEmail(authentication.getName());
         return incomeRepository.findAllByCustomerId(customer.getId());
+    }
+
+    public BigDecimal getSumOfAllIncomesOfCustomerByMonth(YearMonth yearMonth) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Customer customer = customerService.getCustomerByEmail(authentication.getName());
+
+        double sum = incomeRepository.findAllByCustomerId(customer.getId()).stream()
+                .filter(income -> {
+                    YearMonth incomeYearMonth = YearMonth.from(income.getCreationTime());
+                    return incomeYearMonth.equals(yearMonth);
+                })
+                .mapToDouble(income -> income.getMoney().doubleValue())
+                .sum();
+
+        return BigDecimal.valueOf(sum);
     }
 
     @Transactional
@@ -43,12 +60,12 @@ public class IncomeService {
     }
 
     @Transactional
-    public void deleteIncome(Long id) {
+    public void deleteIncomeById(Long id) {
         incomeRepository.delete(getIncomeById(id));
     }
 
     @Transactional
-    public void deleteAllIncomesByUserId() {
+    public void deleteAllIncomesOfCustomer() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Customer customer = customerService.getCustomerByEmail(authentication.getName());
         incomeRepository.deleteAllByCustomerId(customer.getId());
@@ -61,4 +78,5 @@ public class IncomeService {
                 .creationTime(incomeDto.getCreationTime())
                 .build();
     }
+
 }
