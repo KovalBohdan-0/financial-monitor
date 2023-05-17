@@ -9,6 +9,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.time.YearMonth;
 import java.util.List;
 
 @AllArgsConstructor
@@ -26,6 +28,21 @@ public class IncomeService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Customer customer = customerService.getCustomerByEmail(authentication.getName());
         return incomeRepository.findAllByCustomerId(customer.getId());
+    }
+
+    public BigDecimal getSumOfAllIncomesOfCustomerByMonth(YearMonth yearMonth) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Customer customer = customerService.getCustomerByEmail(authentication.getName());
+
+        double sum = incomeRepository.findAllByCustomerId(customer.getId()).stream()
+                .filter(income -> {
+                    YearMonth incomeYearMonth = YearMonth.from(income.getCreationTime());
+                    return incomeYearMonth.equals(yearMonth);
+                })
+                .mapToDouble(income -> income.getMoney().doubleValue())
+                .sum();
+
+        return BigDecimal.valueOf(sum);
     }
 
     @Transactional
