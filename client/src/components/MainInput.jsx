@@ -3,29 +3,43 @@ import { Colors } from '../styles';
 import { Box } from '@mui/material';
 import SearchIcon from '/searchnormal1.svg';
 const Input = styled('input')({
-  width: '203px',
-  padding: '13px 50px 13px 20px',
-  fontSize: '14px',
-  border: 'none',
-  borderRadius: '20px',
+  width: '184px',
+  padding: '27px 50px 12px 27px',
+  fontSize: '147x',
+  border: '1px solid',
+  borderColor: Colors.white,
+  borderRadius: '13px',
   fontFamily: 'Rowdies, sans-serif',
-  color: Colors.inputMainText,
-  backgroundColor: Colors.inputMainColor,
+  color: Colors.white,
+  backgroundColor: Colors.primary,
 });
 
 function MainInput(props) {
   return (
-    <Box>
+    <Box display={'flex'} alignItems={'center'}>
+      <Box
+        sx={{
+          marginLeft: '10px',
+          marginRight: '-70px',
+          zIndex: '3',
+          fontSize: '10px',
+          color: Colors.transactionColor,
+        }}
+      >
+        Сума депозиту
+      </Box>
       <Input {...props} />
-      <img
+      <Box
         src={SearchIcon}
         alt='Search Icon'
         style={{
-          cursor: 'pointer',
+          color: Colors.white,
           marginLeft: '-40px',
           marginBottom: '-6px',
         }}
-      />
+      >
+        ₴
+      </Box>
     </Box>
   );
 }

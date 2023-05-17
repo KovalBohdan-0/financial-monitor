@@ -32,7 +32,7 @@ function Main() {
         </Box>
         <Box display={'flex'} gap={'17px'} mt='36px'>
           <Box>
-            <MainNavigation />
+            <MainNavigation value={'/main'} />
             <Box mt='125px'>
               <img src={Person} alt='' />
             </Box>

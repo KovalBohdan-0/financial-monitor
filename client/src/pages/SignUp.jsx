@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom';
 import LogIn from './LogIn';
 import Logo from '/logo.svg';
 import People from '/people.png';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import MainText from '../components/MainText';
 import axios from 'axios';
 import TransitionsModal from '../components/Modal';
 import AuthorBtn from '../components/ButtonSubmit';
-
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { IconButton } from '@mui/material';
 function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -206,14 +206,12 @@ function SignUp() {
                   color='third'
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  error={Boolean(errors.password)}
-                  helperText={errors.password}
                   sx={{
                     width: '300px',
                     marginBottom: '45px',
                   }}
                 />
-                <VisibilityIcon
+                <IconButton
                   onClick={() => setSeePassword(!seePassword)}
                   sx={{
                     cursor: 'pointer',
@@ -221,23 +219,24 @@ function SignUp() {
                     marginBottom: '-30px',
                     marginLeft: '10px',
                   }}
-                />
+                >
+                  {seePassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
               </Box>
               <Box>
                 <TextField
-                  color='third'
-                  label='Password confirmation'
                   variant='standard'
+                  color='third'
                   type={seePassword ? 'text' : 'password'}
+                  label='Password confirmation'
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  error={Boolean(errors.confirmPassword)}
-                  helperText={errors.confirmPassword}
                   sx={{
                     width: '300px',
+                    marginBottom: '45px',
                   }}
                 />
-                <VisibilityIcon
+                <IconButton
                   onClick={() => setSeePassword(!seePassword)}
                   sx={{
                     cursor: 'pointer',
@@ -245,7 +244,9 @@ function SignUp() {
                     marginBottom: '-30px',
                     marginLeft: '10px',
                   }}
-                />
+                >
+                  {seePassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
               </Box>
               {email &&
               password &&

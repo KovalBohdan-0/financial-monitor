@@ -14,6 +14,7 @@ export const Colors = {
   loginFalseBg: '#EF4141',
   diagramColorMain: '#495AF0',
   diagramColorSecondary: '#D897E6',
+  transactionColor: '#A5AEFF',
 };
 
 const overrides = {

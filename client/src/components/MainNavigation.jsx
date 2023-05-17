@@ -8,12 +8,14 @@ import StatsIcon from '/stats.svg';
 import TransactIcon from '/transaction.svg';
 import SettingIcon from '/setting.svg';
 import ZvitIcon from '/zvitIcon.svg';
-import { useState } from 'react';
+import PropTypes from 'prop-types';
 const Item = styled(Paper)(() => ({
   textAlign: 'center',
   fontSize: '17px',
 }));
-
+MainNavigation.propTypes = {
+  value: PropTypes.string.isRequired,
+};
 const ItemLink = styled(Link)(({ isselected }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -22,16 +24,15 @@ const ItemLink = styled(Link)(({ isselected }) => ({
   fontWeight: isselected ? 'bold' : 'normal',
 }));
 
-export default function MainNavigation() {
-  const [selectedItem, setSelectedItem] = useState('/main');
+export default function MainNavigation({ value }) {
+  const selectedItem = value;
   return (
     <Box sx={{ width: 200, marginTop: '15px' }}>
       <Stack spacing='20px'>
         <Item elevation={0}>
           <ItemLink
             to='/main'
-            isselected={selectedItem === '/main'}
-            onClick={() => setSelectedItem('/main')}
+            isselected={selectedItem === '/main' ? 'true' : 'false'}
           >
             <img src={HomeIcon} alt='HomeIcon' /> Головна
           </ItemLink>
@@ -39,8 +40,7 @@ export default function MainNavigation() {
         <Item elevation={0}>
           <ItemLink
             to='/stats'
-            isselected={selectedItem === '/stats'}
-            onClick={() => setSelectedItem('/stats')}
+            isselected={selectedItem === '/stats' ? 'true' : 'false'}
           >
             <img src={StatsIcon} alt='StatsIcon' />
             Статистика
@@ -49,8 +49,7 @@ export default function MainNavigation() {
         <Item elevation={0}>
           <ItemLink
             to='/transactions'
-            isselected={selectedItem === '/transactions'}
-            onClick={() => setSelectedItem('/transactions')}
+            isselected={selectedItem === '/transactions' ? 'true' : 'false'}
           >
             <img src={TransactIcon} alt='TransactIcon' />
             Транзакції
@@ -59,8 +58,7 @@ export default function MainNavigation() {
         <Item elevation={0}>
           <ItemLink
             to='/settings'
-            isselected={selectedItem === '/settings'}
-            onClick={() => setSelectedItem('/settings')}
+            isselected={selectedItem === '/settings' ? 'true' : 'false'}
           >
             <img src={SettingIcon} alt='SettingIcon' />
             Налаштування
@@ -69,8 +67,7 @@ export default function MainNavigation() {
         <Item elevation={0}>
           <ItemLink
             to='/zvit'
-            isselected={selectedItem === '/zvit'}
-            onClick={() => setSelectedItem('/zvit')}
+            isselected={selectedItem === '/zvit' ? 'true' : 'false'}
           >
             <img src={ZvitIcon} alt='ZvitIcon' />
             Звіти
