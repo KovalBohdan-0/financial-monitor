@@ -24,5 +24,10 @@ public class CustomerController {
         return  customerService.getCustomerByEmail(email);
     }
 
+    @GetMapping
+    public CustomerDto getCurrentCustomer() {
+        return customerService.getCurrentCustomer();
+    }
+
 }
 

@@ -40,4 +40,9 @@ public class DepositController {
     public void deleteAllDeposits() {
         depositService.deleteAllDepositsByUserId();
     }
+
+    @GetMapping("/info")
+    public DepositInfo getDepositInfo() {
+        return depositService.getDepositInfo();
+    }
 }
