@@ -4,6 +4,8 @@ import com.ftf.financialmonitor.exception.DuplicateResourceException;
 import com.ftf.financialmonitor.exception.ResourceNotFoundException;
 import com.ftf.financialmonitor.registration.RegistrationRequest;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,8 +51,15 @@ public class CustomerService {
         customerRepository.save(customer);
     }
 
+    public CustomerDto getCurrentCustomer() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Customer customer = getCustomerByEmail(authentication.getName());
+        return new CustomerDto(customer.getFirstname(), customer.getSurname(), customer.getEmail(), customer.isEnabled());
+    }
+
     public int enableCustomer(String email) {
         return customerRepository.enableCustomerWithEmail(email);
     }
+
 
 }

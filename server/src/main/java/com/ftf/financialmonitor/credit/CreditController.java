@@ -40,4 +40,9 @@ public class CreditController {
     public void deleteAllCreditsOfCustomer() {
         creditService.deleteAllCreditsOfCustomer();
     }
+
+    @GetMapping("/info")
+    public CreditInfo getCreditInfo() {
+        return creditService.getCreditInfo();
+    }
 }

@@ -9,6 +9,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @AllArgsConstructor
@@ -52,6 +55,29 @@ public class DepositService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Customer customer = customerService.getCustomerByEmail(authentication.getName());
         depositRepository.deleteAllByCustomerId(customer.getId());
+    }
+
+    public DepositInfo getDepositInfo() {
+        List<Deposit> deposits = getAllDeposits();
+
+        if (deposits.size() != 0) {
+            BigDecimal sumOfIncome = new BigDecimal(0);
+            Deposit firstDeposit = deposits.get(0);
+
+            for (Deposit deposit : deposits) {
+                if (firstDeposit.getEndTime().isAfter(deposit.getEndTime())) {
+                    firstDeposit = deposit;
+                }
+
+                sumOfIncome = sumOfIncome.add(deposit.getMoney()
+                        .multiply(deposit.getPercent().multiply(new BigDecimal("0.0000003858")))
+                        .multiply(BigDecimal.valueOf(ChronoUnit.SECONDS.between(deposit.getCreationTime(), deposit.getEndTime()))));
+            }
+
+            return new DepositInfo(sumOfIncome, deposits.size(), firstDeposit.getEndTime());
+        }
+
+        return new DepositInfo(new BigDecimal(0), 0, LocalDateTime.MIN);
     }
 
     private Deposit depositDtoToEntity(DepositDto depositDto) {
