@@ -45,9 +45,4 @@ public class DepositController {
     public DepositInfo getDepositInfo() {
         return depositService.getDepositInfo();
     }
-
-    @GetMapping("/info")
-    public DepositInfo getDepositInfo() {
-        return depositService.getDepositInfo();
-    }
 }
