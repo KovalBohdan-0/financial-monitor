@@ -7,12 +7,17 @@ import Slider from '@mui/material/Slider';
 import Button from '@mui/material/Button';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import PersonResponse from '/Person-Modal.svg';
+import Confirmation from '/confirmation.svg';
+
 TransactHOC.propTypes = {
   type: PropTypes.oneOf(['deposit', 'credit']).isRequired,
 };
+
 function TransactHOC({ type }) {
   const [amount, setAmount] = useState(0);
   const [sliderValue, setSliderValue] = useState(0);
+  const [message, setMessage] = useState(false);
 
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -66,7 +71,7 @@ function TransactHOC({ type }) {
       });
       console.log(response.data);
 
-      // Navigate to MainPage.js
+      setMessage(true);
     } catch (error) {
       if (error.response) {
         console.log(error.response.data.message);
@@ -88,50 +93,8 @@ function TransactHOC({ type }) {
       >
         {type === 'deposit' ? 'Відкрити депозит' : 'Оформити кредит'}
       </Typography>
-      <form onSubmit={formSubmit}>
-        <Typography
-          fontFamily={'Rowdies, sans-serif'}
-          fontSize='15px'
-          fontWeight={700}
-          color={Colors.white}
-          marginBottom='17px'
-        >
-          {type === 'deposit'
-            ? 'Введіть суму, яку хочете примножити'
-            : 'Введіть суму, яку хочете отримати'}
-        </Typography>
-        <Box display='flex' gap='40px' marginBottom='46px'>
-          <StyledInput
-            min={1000}
-            placeholder={type === 'deposit' ? 'Сума депозиту' : 'Сума кредиту'}
-            value={amount}
-            onChange={handleInputChange}
-          />
-          <Box
-            sx={{
-              padding: '10px',
-              borderRadius: '13px',
-              border: '1px solid white',
-              color: 'white',
-              width: '90px',
-              height: '40px',
-              fontFamily: 'Rowdies, sans-serif',
-            }}
-          >
-            <span
-              style={{
-                fontSize: '10px',
-                color: '#A5AEFF',
-                display: 'block',
-                marginBottom: '5px',
-              }}
-            >
-              Валюта
-            </span>
-            <span>Гривня</span>
-          </Box>
-        </Box>
-        <Box width={300}>
+      <Box display='flex' gap='200px'>
+        <form onSubmit={formSubmit}>
           <Typography
             fontFamily={'Rowdies, sans-serif'}
             fontSize='15px'
@@ -139,45 +102,109 @@ function TransactHOC({ type }) {
             color={Colors.white}
             marginBottom='17px'
           >
-            Термін (міс.)
+            {type === 'deposit'
+              ? 'Введіть суму, яку хочете примножити'
+              : 'Введіть суму, яку хочете отримати'}
           </Typography>
-          <Box
+          <Box display='flex' gap='40px' marginBottom='46px'>
+            <StyledInput
+              min={1000}
+              placeholder={
+                type === 'deposit' ? 'Сума депозиту' : 'Сума кредиту'
+              }
+              value={amount}
+              onChange={handleInputChange}
+            />
+            <Box
+              sx={{
+                padding: '10px',
+                borderRadius: '13px',
+                border: '1px solid white',
+                color: 'white',
+                width: '90px',
+                height: '40px',
+                fontFamily: 'Rowdies, sans-serif',
+              }}
+            >
+              <span
+                style={{
+                  fontSize: '10px',
+                  color: '#A5AEFF',
+                  display: 'block',
+                  marginBottom: '5px',
+                }}
+              >
+                Валюта
+              </span>
+              <span>Гривня</span>
+            </Box>
+          </Box>
+          <Box width={300}>
+            <Typography
+              fontFamily={'Rowdies, sans-serif'}
+              fontSize='15px'
+              fontWeight={700}
+              color={Colors.white}
+              marginBottom='17px'
+            >
+              Термін (міс.)
+            </Typography>
+            <Box
+              sx={{
+                padding: '10px 0px 10px 30px',
+                borderRadius: '13px',
+                border: '1px solid white',
+                color: 'white',
+                width: '360px',
+                marginBottom: '37px',
+              }}
+            >
+              <Slider
+                value={sliderValue}
+                onChange={handleSliderChange}
+                color='fourth'
+                defaultValue={0}
+                step={1}
+                min={0}
+                max={12}
+                valueLabelDisplay='auto'
+                sx={{ width: '320px' }}
+              />
+            </Box>
+          </Box>
+          <Button
+            type='submit'
+            variant='contained'
+            color='fourth'
             sx={{
-              padding: '10px 0px 10px 30px',
-              borderRadius: '13px',
-              border: '1px solid white',
-              color: 'white',
-              width: '360px',
-              marginBottom: '37px',
+              color: Colors.diagramColorMain,
+              fontFamily: 'Rowdies, sans-serif',
+              fontWeight: '700',
             }}
           >
-            <Slider
-              value={sliderValue}
-              onChange={handleSliderChange}
-              color='fourth'
-              defaultValue={0}
-              step={1}
-              min={0}
-              max={12}
-              valueLabelDisplay='auto'
-              sx={{ width: '320px' }}
-            />
+            {type === 'deposit' ? 'Відкрити депозит' : 'Оформити кредит'}
+          </Button>
+        </form>
+        {message && (
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <Typography
+              fontFamily={'Rowdies, sans-serif'}
+              fontSize='24px'
+              fontWeight={700}
+              textAlign={'center'}
+              color={Colors.white}
+            >
+              {type === 'deposit'
+                ? 'Ваш депозит відкрито!'
+                : 'Ваш кредит оформлено!'}
+            </Typography>
+            <img height={'155px'} src={PersonResponse} alt='' />
+            <img height={'85px'} src={Confirmation} alt='' />
           </Box>
-        </Box>
-        <Button
-          type='submit'
-          variant='contained'
-          color='fourth'
-          sx={{
-            color: Colors.diagramColorMain,
-            fontFamily: 'Rowdies, sans-serif',
-            fontWeight: '700',
-          }}
-        >
-          {type === 'deposit' ? 'Відкрити депозит' : 'Оформити кредит'}
-        </Button>
-      </form>
+        )}
+      </Box>
     </>
   );
 }
+
 export default TransactHOC;
