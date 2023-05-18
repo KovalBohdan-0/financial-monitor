@@ -6,8 +6,12 @@ import StyledInput from './styledInput';
 import Slider from '@mui/material/Slider';
 import Button from '@mui/material/Button';
 import axios from 'axios';
-function TransactCredit() {
-  const [credit, setCredit] = useState(0);
+import PropTypes from 'prop-types';
+TransactHOC.propTypes = {
+  type: PropTypes.oneOf(['deposit', 'credit']).isRequired,
+};
+function TransactHOC({ type }) {
+  const [amount, setAmount] = useState(0);
   const [sliderValue, setSliderValue] = useState(0);
 
   const handleInputChange = (e) => {
@@ -15,9 +19,9 @@ function TransactCredit() {
     const numericValue = parseFloat(value);
 
     if (value.trim() === '' || isNaN(numericValue)) {
-      setCredit(0);
+      setAmount(0);
     } else {
-      setCredit(numericValue);
+      setAmount(numericValue);
     }
   };
 
@@ -38,26 +42,28 @@ function TransactCredit() {
       parsedData = JSON.parse(responseData);
       console.log(parsedData);
     }
-    console.log('credit:', credit);
+    console.log('Amount:', amount);
     console.log('Slider Value:', sliderValue);
     console.log('formattedTime', formattedTime);
-    const Credit = {
-      money: credit,
+    const transactionData = {
+      money: amount,
       description: '',
       percent: sliderValue,
       endTime: formattedTime,
     };
+
+    const apiUrl =
+      type === 'deposit'
+        ? 'https://financial-monitor-production.up.railway.app/api/v1/deposit'
+        : 'https://financial-monitor-production.up.railway.app/api/v1/credit';
+
     try {
-      const response = await axios.post(
-        'https://financial-monitor-production.up.railway.app/api/v1/credit',
-        Credit,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${parsedData}`,
-          },
-        }
-      );
+      const response = await axios.post(apiUrl, transactionData, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${parsedData}`,
+        },
+      });
       console.log(response.data);
 
       // Navigate to MainPage.js
@@ -78,8 +84,9 @@ function TransactCredit() {
         fontWeight={700}
         textAlign={'center'}
         color={Colors.white}
+        marginBottom='37px'
       >
-        Оформити кредит
+        {type === 'deposit' ? 'Відкрити депозит' : 'Оформити кредит'}
       </Typography>
       <form onSubmit={formSubmit}>
         <Typography
@@ -87,14 +94,17 @@ function TransactCredit() {
           fontSize='15px'
           fontWeight={700}
           color={Colors.white}
+          marginBottom='17px'
         >
-          Введіть суму яку хочете отримати
+          {type === 'deposit'
+            ? 'Введіть суму, яку хочете примножити'
+            : 'Введіть суму, яку хочете отримати'}
         </Typography>
-        <Box display='flex' gap='40px'>
+        <Box display='flex' gap='40px' marginBottom='46px'>
           <StyledInput
             min={1000}
-            placeholder='Сума депозиту'
-            value={credit}
+            placeholder={type === 'deposit' ? 'Сума депозиту' : 'Сума кредиту'}
+            value={amount}
             onChange={handleInputChange}
           />
           <Box
@@ -127,6 +137,7 @@ function TransactCredit() {
             fontSize='15px'
             fontWeight={700}
             color={Colors.white}
+            marginBottom='17px'
           >
             Термін (міс.)
           </Typography>
@@ -137,6 +148,7 @@ function TransactCredit() {
               border: '1px solid white',
               color: 'white',
               width: '360px',
+              marginBottom: '37px',
             }}
           >
             <Slider
@@ -162,11 +174,10 @@ function TransactCredit() {
             fontWeight: '700',
           }}
         >
-          Відкрити депозит
+          {type === 'deposit' ? 'Відкрити депозит' : 'Оформити кредит'}
         </Button>
       </form>
     </>
   );
 }
-
-export default TransactCredit;
+export default TransactHOC;

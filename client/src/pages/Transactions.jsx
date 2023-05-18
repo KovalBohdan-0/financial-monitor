@@ -12,8 +12,8 @@ import { useState } from 'react';
 import MainNavigation from '../components/MainNavigation';
 import { Colors } from '../styles';
 import { Typography } from '@mui/material';
-import TransactDepo from '../components/TransactDepo';
-import TransactCredit from '../components/TransactCredit';
+import { TransactDepo } from '../components/Transact';
+import { TransactCredit } from '../components/Transact';
 function Transactions() {
   const [isDepo, setIsDepo] = useState(false);
   const [isPurchase, setIsPurchase] = useState(false);
