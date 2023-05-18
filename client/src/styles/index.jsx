@@ -28,6 +28,9 @@ const overrides = {
     third: {
       main: Colors.inputTextColor,
     },
+    fourth: {
+      main: Colors.white,
+    },
   },
 
   components: {

@@ -91,17 +91,7 @@ function Transactions() {
                 {isCreadite && 'Оформити кредит'}
               </Typography>
               <Box>
-                <form>
-                  <Typography
-                    fontFamily={'Rowdies, sans-serif'}
-                    fontSize='15px'
-                    fontWeight={700}
-                    color={Colors.white}
-                  >
-                    Введіть суму яку хочете примножити
-                  </Typography>
-                  <MainInput type='number' />
-                </form>
+                <MainInput />
               </Box>
             </Box>
           </Box>
