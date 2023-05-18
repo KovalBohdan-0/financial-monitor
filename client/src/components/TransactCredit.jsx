@@ -6,8 +6,8 @@ import StyledInput from './styledInput';
 import Slider from '@mui/material/Slider';
 import Button from '@mui/material/Button';
 import axios from 'axios';
-function MainInput() {
-  const [depo, setDepo] = useState(0);
+function TransactCredit() {
+  const [credit, setCredit] = useState(0);
   const [sliderValue, setSliderValue] = useState(0);
 
   const handleInputChange = (e) => {
@@ -15,9 +15,9 @@ function MainInput() {
     const numericValue = parseFloat(value);
 
     if (value.trim() === '' || isNaN(numericValue)) {
-      setDepo(0);
+      setCredit(0);
     } else {
-      setDepo(numericValue);
+      setCredit(numericValue);
     }
   };
 
@@ -38,19 +38,19 @@ function MainInput() {
       parsedData = JSON.parse(responseData);
       console.log(parsedData);
     }
-    console.log('Depo:', depo);
+    console.log('credit:', credit);
     console.log('Slider Value:', sliderValue);
     console.log('formattedTime', formattedTime);
-    const Depo = {
-      money: depo,
+    const Credit = {
+      money: credit,
       description: '',
       percent: sliderValue,
       endTime: formattedTime,
     };
     try {
       const response = await axios.post(
-        'https://financial-monitor-production.up.railway.app/api/v1/deposit',
-        Depo,
+        'https://financial-monitor-production.up.railway.app/api/v1/credit',
+        Credit,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -72,6 +72,15 @@ function MainInput() {
 
   return (
     <>
+      <Typography
+        fontFamily={'Rowdies, sans-serif'}
+        fontSize='28px'
+        fontWeight={700}
+        textAlign={'center'}
+        color={Colors.white}
+      >
+        Оформити кредит
+      </Typography>
       <form onSubmit={formSubmit}>
         <Typography
           fontFamily={'Rowdies, sans-serif'}
@@ -79,13 +88,13 @@ function MainInput() {
           fontWeight={700}
           color={Colors.white}
         >
-          Введіть суму, яку хочете примножити
+          Введіть суму яку хочете отримати
         </Typography>
         <Box display='flex' gap='40px'>
           <StyledInput
             min={1000}
             placeholder='Сума депозиту'
-            value={depo}
+            value={credit}
             onChange={handleInputChange}
           />
           <Box
@@ -160,4 +169,4 @@ function MainInput() {
   );
 }
 
-export default MainInput;
+export default TransactCredit;

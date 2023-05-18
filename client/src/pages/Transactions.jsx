@@ -12,7 +12,8 @@ import { useState } from 'react';
 import MainNavigation from '../components/MainNavigation';
 import { Colors } from '../styles';
 import { Typography } from '@mui/material';
-import MainInput from '../components/MainInput';
+import TransactDepo from '../components/TransactDepo';
+import TransactCredit from '../components/TransactCredit';
 function Transactions() {
   const [isDepo, setIsDepo] = useState(false);
   const [isPurchase, setIsPurchase] = useState(false);
@@ -86,12 +87,11 @@ function Transactions() {
                 color={Colors.white}
               >
                 {!isDepo && !isPurchase && !isCreadite && 'Всі транзакції'}
-                {isDepo && 'Відкрити депозит'}
                 {isPurchase && 'Відкрити депозит'}
-                {isCreadite && 'Оформити кредит'}
               </Typography>
               <Box>
-                <MainInput />
+                {isDepo && <TransactDepo />}
+                {isCreadite && <TransactCredit />}
               </Box>
             </Box>
           </Box>
