@@ -9,6 +9,7 @@ import MyCardText from '../components/MyCardText';
 import Diagram from '../components/Diagram';
 import AnalitycsBtn from '../components/AnalyticsBtn';
 import CardInfo from '../components/CardInfo';
+
 function Main() {
   // const [search, setSearch] = useState('');
 

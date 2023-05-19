@@ -85,11 +85,11 @@ function Diagram() {
         tick={{ fill: Colors.black }}
       />
       <YAxis
-        tickFormatter={(value) => `$${value}`}
+        tickFormatter={(value) => `₴${value}`}
         tick={{ fill: Colors.black }}
       />
       <CartesianGrid vertical={false} />
-      <Tooltip formatter={(value) => `$${value}`} />
+      <Tooltip formatter={(value) => `₴${value}`} />
       <Area
         type='monotone'
         dataKey='sumOfExpense'
