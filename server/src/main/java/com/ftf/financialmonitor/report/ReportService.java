@@ -1,7 +1,7 @@
 package com.ftf.financialmonitor.report;
 
-import com.ftf.financialmonitor.expense.ExpenseService;
-import com.ftf.financialmonitor.income.IncomeService;
+import com.ftf.financialmonitor.transactions.expense.ExpenseService;
+import com.ftf.financialmonitor.transactions.income.IncomeService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

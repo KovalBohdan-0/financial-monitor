@@ -1,4 +1,4 @@
-package com.ftf.financialmonitor.income;
+package com.ftf.financialmonitor.transactions.income;
 
 import com.ftf.financialmonitor.customer.Customer;
 import com.ftf.financialmonitor.customer.CustomerService;

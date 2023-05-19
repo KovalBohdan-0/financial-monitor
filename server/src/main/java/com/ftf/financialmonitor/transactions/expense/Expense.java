@@ -1,4 +1,4 @@
-package com.ftf.financialmonitor.income;
+package com.ftf.financialmonitor.transactions.expense;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,16 +14,16 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Income {
+public class Expense {
     @Id
     @SequenceGenerator(
-            name = "income_id_sequence",
-            sequenceName = "income_id_sequence",
+            name = "expense_id_sequence",
+            sequenceName = "expense_id_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "income_id_sequence"
+            generator = "expense_id_sequence"
     )
     @Column(nullable = false)
     private Long id;

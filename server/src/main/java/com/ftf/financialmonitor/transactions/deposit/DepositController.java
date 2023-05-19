@@ -1,4 +1,4 @@
-package com.ftf.financialmonitor.deposit;
+package com.ftf.financialmonitor.transactions.deposit;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

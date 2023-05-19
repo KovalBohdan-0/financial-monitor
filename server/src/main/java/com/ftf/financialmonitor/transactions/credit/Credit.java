@@ -1,4 +1,4 @@
-package com.ftf.financialmonitor.expense;
+package com.ftf.financialmonitor.transactions.credit;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Expense {
+public class Credit {
     @Id
     @SequenceGenerator(
             name = "expense_id_sequence",
@@ -30,9 +30,11 @@ public class Expense {
     @Column(nullable = false)
     private BigDecimal money;
     @Column(nullable = false)
-    private String description;
+    private BigDecimal percent;
     @Column(nullable = false)
     private LocalDateTime creationTime;
+    @Column(nullable = false)
+    private LocalDateTime endTime;
     @Column(nullable = false)
     private Long customerId;
 }

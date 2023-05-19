@@ -1,4 +1,4 @@
-package com.ftf.financialmonitor.income;
+package com.ftf.financialmonitor.transactions.income;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

@@ -1,4 +1,4 @@
-package com.ftf.financialmonitor.deposit;
+package com.ftf.financialmonitor.transactions.deposit;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

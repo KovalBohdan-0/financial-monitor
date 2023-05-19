@@ -1,4 +1,4 @@
-package com.ftf.financialmonitor.deposit;
+package com.ftf.financialmonitor.transactions.deposit;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

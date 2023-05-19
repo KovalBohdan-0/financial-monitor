@@ -1,6 +1,6 @@
 package com.ftf.financialmonitor.customer;
 
-import com.ftf.financialmonitor.deposit.Deposit;
+import com.ftf.financialmonitor.transactions.deposit.Deposit;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
