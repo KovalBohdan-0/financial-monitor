@@ -1,5 +1,6 @@
-package com.ftf.financialmonitor.deposit;
+package com.ftf.financialmonitor.transactions.credit;
 
+import com.ftf.financialmonitor.transactions.Transaction;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Deposit {
+public class Credit implements Transaction {
     @Id
     @SequenceGenerator(
             name = "expense_id_sequence",
@@ -37,4 +38,9 @@ public class Deposit {
     private LocalDateTime endTime;
     @Column(nullable = false)
     private Long customerId;
+
+    @Override
+    public LocalDateTime getCreationTime(){
+        return creationTime;
+    }
 }

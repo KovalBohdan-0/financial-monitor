@@ -1,4 +1,4 @@
-package com.ftf.financialmonitor.income;
+package com.ftf.financialmonitor.transactions.income;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -40,14 +40,14 @@ public class IncomeController {
     }
 
     @Operation(summary = "Adds new income",
-            description = "Adds new income with end money, percent, end datetime, to current customer")
+            description = "Adds new income with money and message to current customer")
     @PostMapping
     public void addIncome(@RequestBody IncomeDto incomeDto) {
         incomeService.addIncome(incomeDto);
     }
 
     @Operation(summary = "Updates income by id",
-            description = "Updates income with money, percent, end datetime, to current customer")
+            description = "Updates income with money to current customer")
     @PutMapping
     public void updateIncome(@RequestBody IncomeUpdate incomeUpdate) {
         incomeService.updateIncome(incomeUpdate);

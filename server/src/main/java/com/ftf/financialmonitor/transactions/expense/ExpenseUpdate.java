@@ -1,4 +1,4 @@
-package com.ftf.financialmonitor.expense;
+package com.ftf.financialmonitor.transactions.expense;
 
 import java.math.BigDecimal;
 

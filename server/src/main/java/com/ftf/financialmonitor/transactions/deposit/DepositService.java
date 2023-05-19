@@ -1,4 +1,4 @@
-package com.ftf.financialmonitor.deposit;
+package com.ftf.financialmonitor.transactions.deposit;
 
 import com.ftf.financialmonitor.customer.Customer;
 import com.ftf.financialmonitor.customer.CustomerService;
