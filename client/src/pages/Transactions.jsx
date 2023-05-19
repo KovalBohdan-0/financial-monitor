@@ -12,7 +12,7 @@ import IncomeActive from '/дохід-active.svg';
 import Income from '/дохід.svg';
 import EditActive from '/редагування-active.svg';
 import Edit from '/редагування.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MainNavigation from '../components/MainNavigation';
 import { Colors } from '../styles';
 import { Typography } from '@mui/material';
@@ -21,7 +21,9 @@ import { TransactCredit } from '../components/Transact';
 import PurchaseComponent from '../components/Purchase';
 import IncomeComponent from '../components/Income';
 import EditComponent from '../components/EditComponent';
+import axios from 'axios';
 function Transactions() {
+  const [data, setData] = useState([]);
   const [isDepo, setIsDepo] = useState(false);
   const [isPurchase, setIsPurchase] = useState(false);
   const [isCreadite, setIsCreadite] = useState(false);
@@ -65,6 +67,38 @@ function Transactions() {
     setIsIncome(false);
     setIsEdit((prevIsActive) => !prevIsActive);
   };
+
+  useEffect(() => {
+    async function getData() {
+      const responseData = localStorage.getItem('responseData');
+      let parsedData;
+
+      if (responseData) {
+        parsedData = JSON.parse(responseData);
+      }
+
+      try {
+        const response = await axios.get(
+          'https://financial-monitor-production.up.railway.app/api/v1/report/monthly-report/2023',
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${parsedData}`,
+            },
+          }
+        );
+        setData(response.data);
+        console.log(response.data);
+      } catch (error) {
+        if (error.response) {
+          console.log(error.response.data.message);
+        } else {
+          console.log('Error:', error.message);
+        }
+      }
+    }
+    getData();
+  }, [isPurchase, isIncome, isEdit]);
   return (
     <>
       <Box m='0 auto' width='1280px' padding='43px 66px'>
@@ -138,6 +172,30 @@ function Transactions() {
                 {isCreadite && <TransactCredit />}
                 {isIncome && <IncomeComponent />}
                 {isEdit && <EditComponent />}
+                {!isDepo &&
+                  !isPurchase &&
+                  !isCreadite &&
+                  !isIncome &&
+                  !isEdit && (
+                    <Box style={{ height: '400px', overflowY: 'scroll' }}>
+                      {data.map((item, idx) => {
+                        return (
+                          <Box
+                            key={idx}
+                            style={{
+                              marginTop: '10px',
+                              marginBottom: '10px',
+                              fontFamily: 'Rowdies, sans-serif',
+                              color: Colors.white,
+                            }}
+                          >
+                            Місяць {item.month} сума доходу {item.sumOfIncome}₴
+                            сума витрат {item.sumOfExpense}$
+                          </Box>
+                        );
+                      })}
+                    </Box>
+                  )}
               </Box>
             </Box>
           </Box>

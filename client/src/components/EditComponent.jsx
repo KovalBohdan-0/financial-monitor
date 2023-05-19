@@ -5,6 +5,8 @@ import { Colors } from '../styles';
 import Button from '@mui/material/Button';
 import Credit from './Editing/Credit';
 import DepoEdit from './Editing/DepoEdit';
+import Income from './Editing/Income';
+import Purchases from './Editing/Purchases';
 
 function EditComponent() {
   const [activeButton, setActiveButton] = useState('Кредит');
@@ -80,8 +82,8 @@ function EditComponent() {
           >
             {activeButton === 'Кредит' ? <Credit /> : null}
             {activeButton === 'Депозит' ? <DepoEdit /> : null}
-            {activeButton === 'Дохід' ? 'Оформлені доходи' : null}
-            {activeButton === 'Витрати' ? 'Оформлені витрати' : null}
+            {activeButton === 'Дохід' ? <Income /> : null}
+            {activeButton === 'Витрати' ? <Purchases /> : null}
           </Typography>
         </Box>
       </Box>
