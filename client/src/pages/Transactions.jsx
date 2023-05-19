@@ -8,33 +8,62 @@ import PurchaseActive from '/покупки-active.svg';
 import Purchase from '/покупки.svg';
 import CreaditeActive from '/кредит-active.svg';
 import Creadite from '/кредит.svg';
+import IncomeActive from '/дохід-active.svg';
+import Income from '/дохід.svg';
+import EditActive from '/редагування-active.svg';
+import Edit from '/редагування.svg';
 import { useState } from 'react';
 import MainNavigation from '../components/MainNavigation';
 import { Colors } from '../styles';
 import { Typography } from '@mui/material';
 import { TransactDepo } from '../components/Transact';
 import { TransactCredit } from '../components/Transact';
+import PurchaseComponent from '../components/Purchase';
+import IncomeComponent from '../components/Income';
+import EditComponent from '../components/EditComponent';
 function Transactions() {
   const [isDepo, setIsDepo] = useState(false);
   const [isPurchase, setIsPurchase] = useState(false);
   const [isCreadite, setIsCreadite] = useState(false);
+  const [isIncome, setIsIncome] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
 
   const toggleDepo = () => {
     setIsDepo((prevIsActive) => !prevIsActive);
     setIsPurchase(false);
     setIsCreadite(false);
+    setIsIncome(false);
+    setIsEdit(false);
   };
 
   const togglePurchase = () => {
     setIsDepo(false);
     setIsPurchase((prevIsActive) => !prevIsActive);
     setIsCreadite(false);
+    setIsIncome(false);
+    setIsEdit(false);
   };
 
   const toggleCreadite = () => {
     setIsDepo(false);
     setIsPurchase(false);
     setIsCreadite((prevIsActive) => !prevIsActive);
+    setIsIncome(false);
+    setIsEdit(false);
+  };
+  const toggleIncome = () => {
+    setIsDepo(false);
+    setIsPurchase(false);
+    setIsCreadite(false);
+    setIsIncome((prevIsActive) => !prevIsActive);
+    setIsEdit(false);
+  };
+  const toggleEdit = () => {
+    setIsDepo(false);
+    setIsPurchase(false);
+    setIsCreadite(false);
+    setIsIncome(false);
+    setIsEdit((prevIsActive) => !prevIsActive);
   };
   return (
     <>
@@ -72,6 +101,16 @@ function Transactions() {
                 src={isPurchase ? PurchaseActive : Purchase}
                 alt='isPurchase'
               />
+              <img
+                onClick={toggleIncome}
+                src={isIncome ? IncomeActive : Income}
+                alt='isIncome'
+              />
+              <img
+                onClick={toggleEdit}
+                src={isEdit ? EditActive : Edit}
+                alt='isEdit'
+              />
             </Box>
             <Box
               width='896px'
@@ -86,12 +125,19 @@ function Transactions() {
                 textAlign={'center'}
                 color={Colors.white}
               >
-                {!isDepo && !isPurchase && !isCreadite && 'Всі транзакції'}
-                {isPurchase && 'Відкрити депозит'}
+                {!isDepo &&
+                  !isPurchase &&
+                  !isCreadite &&
+                  !isIncome &&
+                  !isEdit &&
+                  'Всі транзакції'}
               </Typography>
               <Box>
+                {isPurchase && <PurchaseComponent />}
                 {isDepo && <TransactDepo />}
                 {isCreadite && <TransactCredit />}
+                {isIncome && <IncomeComponent />}
+                {isEdit && <EditComponent />}
               </Box>
             </Box>
           </Box>
