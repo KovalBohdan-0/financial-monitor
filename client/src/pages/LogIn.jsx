@@ -1,6 +1,5 @@
-import { useState } from 'react';
-import Logo from '../../public/logo.svg';
-import People from '../../public/people.png';
+import { useState, useEffect } from 'react';
+import Logo from '/logo.svg';
 import { Box, Typography, TextField } from '@mui/material';
 import { Colors } from '../styles';
 import AuthorBtn from '../components/ButtonSubmit';
@@ -8,14 +7,30 @@ import { Link } from 'react-router-dom';
 import SignUp from './SignUp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import MainText from '../components/MainText';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import People from '/people.png';
 function LogIn() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [seePassword, setSeePassword] = useState(false);
   const [errors, setErrors] = useState({});
+  const [userErrors, setUserErrors] = useState('');
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  const validatePassword = (password) => {
+    const errors = [];
+    if (password.length < 6) {
+      errors.push('Password must be at least 6 characters long');
+    }
+
+    return errors;
+  };
 
   const validateForm = () => {
     const errors = {};
+
     // Validate email
     if (!email) {
       errors.email = 'Email is required';
@@ -23,29 +38,64 @@ function LogIn() {
       errors.email = 'Invalid email address';
     }
     // Validate password
-    if (!password) {
-      errors.password = 'Password is required';
-    } else if (password.length < 6) {
-      errors.password = 'Password must be at least 6 characters long';
+    const passwordErrors = validatePassword(password);
+    if (passwordErrors.length > 0) {
+      errors.password = passwordErrors;
     }
-    // Validate password confirmation
-
     setErrors(errors);
     // Return true if there are no errors
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const login = { email, password };
     if (validateForm()) {
-      console.log('Registration successful');
+      try {
+        const response = await axios.post(
+          'https://financial-monitor-production.up.railway.app/api/v1/login',
+          login,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+        localStorage.setItem('responseData', JSON.stringify(response.data.jwt));
+        console.log(response.data.jwt);
+
+        // Navigate to MainPage.js
+        navigate('/main');
+      } catch (error) {
+        if (error.response) {
+          console.log(error.response.data.message);
+          setUserErrors(error.response.data.message);
+        } else {
+          console.log('Error:', error.message);
+        }
+      }
     }
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      const screenWidth = window.innerWidth;
+      setIsSmallScreen(screenWidth <= 768); // Set the screen width threshold for small screens (e.g., iPad, iPhone)
+    };
+
+    handleResize(); // Call the function initially
+
+    window.addEventListener('resize', handleResize); // Add event listener for window resize
+
+    return () => {
+      window.removeEventListener('resize', handleResize); // Clean up the event listener on component unmount
+    };
+  }, []);
 
   return (
     <Box
       sx={{
-        width: '1280px',
+        width: isSmallScreen ? '100%' : '1280px',
         margin: '0 auto',
         padding: '33px 26px 26px 100px',
       }}
@@ -61,7 +111,10 @@ function LogIn() {
               marginTop: '80px',
             }}
           >
-            <MainText />
+            <MainText
+              value1='Почни вже зараз'
+              value2=' Введіть свої дані для доступу до свого облікового запису'
+            />
             <Box
               sx={{
                 display: 'flex',
@@ -125,7 +178,7 @@ function LogIn() {
                   helperText={errors.password}
                   sx={{
                     width: '300px',
-                    fontFamily: 'Roboto', // Set the font to Inter
+                    fontFamily: 'Inter', // Set the font to Inter
                   }}
                 />
                 <VisibilityIcon
@@ -134,21 +187,45 @@ function LogIn() {
                     cursor: 'pointer',
                     color: 'gray',
                     marginBottom: '-30px',
+                    marginLeft: '10px',
                   }}
                 />
               </Box>
               <AuthorBtn
                 type='submit'
-                text='Register'
+                text='Log in'
                 sx={{ marginTop: '70px', marginLeft: '75px' }}
               ></AuthorBtn>
             </form>
           </Box>
         </Box>
-        <Box>
-          <img src={People} alt='' />
-        </Box>
+        {!isSmallScreen && (
+          <Box>
+            <img src={People} alt='' />
+          </Box>
+        )}
       </Box>
+
+      {userErrors ? (
+        <Box
+          sx={{
+            position: 'absolute',
+            width: '100vw',
+            top: '0',
+            left: '0',
+            backgroundColor: Colors.loginFalseBg,
+            fontFamily: 'Rowdies, sans-serif',
+            fontSize: '22px',
+            color: Colors.loginFalseTxt,
+            display: 'grid',
+            placeItems: 'center',
+            padding: '17px 83px',
+          }}
+        >
+          Нам не вдалося знайти обліковий запис. Перевірте своє ім'я користувача
+          та пароль і повторіть спробу.
+        </Box>
+      ) : null}
     </Box>
   );
 }

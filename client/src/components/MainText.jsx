@@ -1,16 +1,28 @@
 import { Typography } from '@mui/material';
+import PropTypes from 'prop-types';
 
-function MainText() {
+function MainText({ value1, value2 = null }) {
   return (
     <>
-      <Typography fontFamily={'Rowdies'} fontSize={37} fontWeight={700}>
-        Почни вже зараз
+      <Typography
+        fontFamily={'Rowdies, sans-serif'}
+        fontSize={37}
+        fontWeight={700}
+      >
+        {value1}
       </Typography>
-      <Typography fontFamily={'Rowdies'} fontSize={16}>
-        Введіть свої дані для доступу до свого облікового запису
-      </Typography>
+      {value2 ? (
+        <Typography fontFamily={'Rowdies, sans-serif'} fontSize={16}>
+          {value2}
+        </Typography>
+      ) : null}
     </>
   );
 }
+
+MainText.propTypes = {
+  value1: PropTypes.string.isRequired,
+  value2: PropTypes.string,
+};
 
 export default MainText;
