@@ -86,7 +86,7 @@ function IncomeComponent() {
               color={Colors.white}
               marginBottom='17px'
             >
-              Введіть суму яку ви витратили
+              Введіть суму яку ви заробили
             </Typography>
 
             <Box display='flex' gap='40px' marginBottom='40px'>
