@@ -1,15 +1,48 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import { Stack, Typography, Container } from '@mui/material';
 import { Colors } from '../styles';
 import Button from '@mui/material/Button';
-
+import axios from 'axios';
 function EditComponent() {
   const [activeButton, setActiveButton] = useState('Кредит');
+  const [data, setData] = useState([]);
 
   const handleButtonClick = (button) => {
     setActiveButton(button);
   };
+  useEffect(() => {
+    async function getData() {
+      const responseData = localStorage.getItem('responseData');
+      console.log(responseData);
+      let parsedData;
+
+      if (responseData) {
+        parsedData = JSON.parse(responseData);
+        console.log(parsedData);
+      }
+      try {
+        const response = await axios.get(
+          'https://financial-monitor-production.up.railway.app/api/v1/credit/all-by-customer',
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${parsedData}`,
+            },
+          }
+        );
+        setData(response.data);
+        console.log(response.data);
+      } catch (error) {
+        if (error.response) {
+          console.log(error.response.data.message);
+        } else {
+          console.log('Error:', error.message);
+        }
+      }
+    }
+    getData();
+  }, [activeButton]);
 
   return (
     <>
@@ -69,7 +102,7 @@ function EditComponent() {
           </Button>
         </Stack>
       </Container>
-      <Box display='flex' gap='100px'>
+      <Box>
         <Box marginLeft='70px'>
           <Typography
             fontFamily={'Rowdies, sans-serif'}
@@ -82,6 +115,11 @@ function EditComponent() {
             {activeButton === 'Дохід' ? 'Оформлені доходи' : null}
             {activeButton === 'Витрати' ? 'Оформлені витрати' : null}
           </Typography>
+        </Box>
+        <Box>
+          {data.map((item) => {
+            return <div key={item.id}>{item.money}</div>;
+          })}
         </Box>
       </Box>
     </>
