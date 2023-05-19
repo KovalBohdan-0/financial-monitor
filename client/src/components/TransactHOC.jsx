@@ -41,16 +41,13 @@ function TransactHOC({ type }) {
     currentDate.setMonth(currentDate.getMonth() + sliderValue);
     const formattedTime = currentDate.toISOString().split(' ')[0]; // Format: hh:mm:ss
     const responseData = localStorage.getItem('responseData');
-    console.log(responseData);
+
     let parsedData;
 
     if (responseData) {
       parsedData = JSON.parse(responseData);
-      console.log(parsedData);
     }
-    console.log('Amount:', amount);
-    console.log('Slider Value:', sliderValue);
-    console.log('formattedTime', formattedTime);
+
     const transactionData = {
       money: amount,
       description: '',

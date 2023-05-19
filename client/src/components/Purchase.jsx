@@ -39,11 +39,7 @@ function PurchaseComponent() {
 
     if (responseData) {
       parsedData = JSON.parse(responseData);
-      console.log(parsedData);
     }
-    console.log('credit:', credit);
-    console.log('formattedTime', formattedTime);
-    console.log('activeButton', activeButton);
 
     const Credit = {
       money: credit,

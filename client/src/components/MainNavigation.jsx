@@ -40,15 +40,7 @@ export default function MainNavigation({ value }) {
             <img src={HomeIcon} alt='HomeIcon' /> Головна
           </ItemLink>
         </Item>
-        {/* <Item elevation={0}>
-          <ItemLink
-            to='/stats'
-            isselected={selectedItem === '/stats' ? value : undefined}
-          >
-            <img src={StatsIcon} alt='StatsIcon' />
-            Статистика
-          </ItemLink>
-        </Item> */}
+
         <Item elevation={0}>
           <ItemLink
             to='/transactions'
@@ -58,15 +50,7 @@ export default function MainNavigation({ value }) {
             Транзакції
           </ItemLink>
         </Item>
-        {/* <Item elevation={0}>
-          <ItemLink
-            to='/settings'
-            isselected={selectedItem === '/settings' ? value : undefined}
-          >
-            <img src={SettingIcon} alt='SettingIcon' />
-            Налаштування
-          </ItemLink>
-        </Item> */}
+
         <Item elevation={0}>
           <ItemLink
             to='/zvit'

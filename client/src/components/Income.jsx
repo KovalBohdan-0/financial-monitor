@@ -29,15 +29,11 @@ function IncomeComponent() {
     const currentDate = new Date();
     const formattedTime = currentDate.toISOString().split(' ')[0]; // Format: hh:mm:ss
     const responseData = localStorage.getItem('responseData');
-    console.log(responseData);
     let parsedData;
 
     if (responseData) {
       parsedData = JSON.parse(responseData);
-      console.log(parsedData);
     }
-    console.log('credit:', credit);
-    console.log('formattedTime', formattedTime);
 
     const Credit = {
       money: credit,

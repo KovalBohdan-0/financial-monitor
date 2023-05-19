@@ -35,15 +35,9 @@ function Diagram() {
           }
         );
         setData(response.data);
-        console.log(response.data);
         setIsLoading(false); // Data loading complete
       } catch (error) {
         setIsLoading(false); // Data loading complete
-        if (error.response) {
-          console.log(error.response.data.message);
-        } else {
-          console.log('Error:', error.message);
-        }
       }
     }
     getData();
