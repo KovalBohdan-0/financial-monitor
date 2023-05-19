@@ -40,14 +40,14 @@ public class DepositController {
     }
 
     @Operation(summary = "Adds new deposit",
-            description = "Adds new deposit with end money, percent, end datetime, to current customer")
+            description = "Adds new deposit with money, percent, end datetime, to current customer")
     @PostMapping
     public void addDeposit(@RequestBody DepositDto depositDto) {
         depositService.addDeposit(depositDto);
     }
 
     @Operation(summary = "Updates deposit by id",
-            description = "Updates deposit with money, percent, end datetime, to current customer")
+            description = "Updates deposit with money to current customer")
     @PutMapping
     public void updateDeposit(@RequestBody DepositUpdate depositUpdate) {
         depositService.updateDeposit(depositUpdate);
@@ -66,7 +66,7 @@ public class DepositController {
     }
 
     @Operation(summary = "Returns deposit info of customer",
-            description = "Returns deposit info (Amount of money customer gets for deposits, count, first deposit that will end)")
+            description = "Returns deposit info (Total amount of money the client has to pay, the number of all active credits, the time when the nearest credit will be completed)")
     @GetMapping("/info")
     public DepositInfo getDepositInfo() {
         return depositService.getDepositInfo();

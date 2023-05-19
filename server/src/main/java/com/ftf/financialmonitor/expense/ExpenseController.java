@@ -40,14 +40,14 @@ public class ExpenseController {
     }
 
     @Operation(summary = "Adds new expense",
-            description = "Adds new expense with end money, percent, end datetime, to current customer")
+            description = "Adds new expense with money and message to current customer")
     @PostMapping
     public void addExpense(@RequestBody ExpenseDto expenseDto) {
         expenseService.addExpense(expenseDto);
     }
 
     @Operation(summary = "Updates expense by id",
-            description = "Updates expense with money, percent, end datetime, to current customer")
+            description = "Updates expense with money to current customer")
     @PutMapping
     public void updateExpense(@RequestBody ExpenseUpdate expenseUpdate) {
         expenseService.updateExpense(expenseUpdate);

@@ -40,14 +40,14 @@ public class CreditController {
     }
 
     @Operation(summary = "Adds new credit",
-            description = "Adds new credit with end money, percent, end datetime, to current customer")
+            description = "Adds new credit with money, percent, end datetime, to current customer")
     @PostMapping
     public void addCredit(@RequestBody CreditDto creditDto) {
         creditService.addCredit(creditDto);
     }
 
     @Operation(summary = "Updates credit by id",
-            description = "Updates credit with money, percent, end datetime, to current customer")
+            description = "Updates credit with money to current customer")
     @PutMapping
     public void updateCredit(@RequestBody CreditUpdate creditUpdate) {
         creditService.updateCredit(creditUpdate);
@@ -66,7 +66,7 @@ public class CreditController {
     }
 
     @Operation(summary = "Returns credit info of customer",
-            description = "Returns credit info (Amount of money customer needs to pay, count, first deposit that will end)")
+            description = "Returns credit info (Total amount of money the client has to pay, the number of all active credits, the expiration date of the nearest credit)")
     @GetMapping("/info")
     public CreditInfo getCreditInfo() {
         return creditService.getCreditInfo();
