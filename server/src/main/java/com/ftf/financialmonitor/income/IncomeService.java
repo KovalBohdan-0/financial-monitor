@@ -55,7 +55,9 @@ public class IncomeService {
     }
 
     @Transactional
-    public void updateIncome(Income income) {
+    public void updateIncome(IncomeUpdate incomeUpdate) {
+        Income income = getIncomeById(incomeUpdate.id());
+        income.setMoney(incomeUpdate.money());
         incomeRepository.save(income);
     }
 

@@ -41,7 +41,9 @@ public class CreditService {
     }
 
     @Transactional
-    public void updateCredit(Credit credit) {
+    public void updateCredit(CreditUpdate creditUpdate) {
+        Credit credit = getCreditById(creditUpdate.id());
+        credit.setMoney(creditUpdate.money());
         creditRepository.save(credit);
     }
 

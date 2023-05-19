@@ -49,8 +49,8 @@ public class DepositController {
     @Operation(summary = "Updates deposit by id",
             description = "Updates deposit with money, percent, end datetime, to current customer")
     @PutMapping
-    public void updateDeposit(@RequestBody Deposit deposit) {
-        depositService.updateDeposit(deposit);
+    public void updateDeposit(@RequestBody DepositUpdate depositUpdate) {
+        depositService.updateDeposit(depositUpdate);
     }
 
     @Operation(summary = "Deletes deposit by id")

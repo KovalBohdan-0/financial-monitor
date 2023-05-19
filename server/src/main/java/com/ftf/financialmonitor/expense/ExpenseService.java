@@ -55,7 +55,9 @@ public class ExpenseService {
     }
 
     @Transactional
-    public void updateExpense(Expense expense) {
+    public void updateExpense(ExpenseUpdate expenseUpdate) {
+        Expense expense = getExpenseById(expenseUpdate.id());
+        expense.setMoney(expenseUpdate.money());
         expenseRepository.save(expense);
     }
 

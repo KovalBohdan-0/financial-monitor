@@ -49,8 +49,8 @@ public class IncomeController {
     @Operation(summary = "Updates income by id",
             description = "Updates income with money, percent, end datetime, to current customer")
     @PutMapping
-    public void updateIncome(@RequestBody Income income) {
-        incomeService.updateIncome(income);
+    public void updateIncome(@RequestBody IncomeUpdate incomeUpdate) {
+        incomeService.updateIncome(incomeUpdate);
     }
 
     @Operation(summary = "Deletes income by id")

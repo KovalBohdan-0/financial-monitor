@@ -49,8 +49,8 @@ public class CreditController {
     @Operation(summary = "Updates credit by id",
             description = "Updates credit with money, percent, end datetime, to current customer")
     @PutMapping
-    public void updateCredit(@RequestBody Credit credit) {
-        creditService.updateCredit(credit);
+    public void updateCredit(@RequestBody CreditUpdate creditUpdate) {
+        creditService.updateCredit(creditUpdate);
     }
 
     @Operation(summary = "Deletes credit by id")

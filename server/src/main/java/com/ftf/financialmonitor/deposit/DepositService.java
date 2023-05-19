@@ -41,7 +41,9 @@ public class DepositService {
     }
 
     @Transactional
-    public void updateDeposit(Deposit deposit) {
+    public void updateDeposit(DepositUpdate depositUpdate) {
+        Deposit deposit = getDepositById(depositUpdate.id());
+        deposit.setMoney(depositUpdate.money());
         depositRepository.save(deposit);
     }
 

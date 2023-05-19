@@ -49,8 +49,8 @@ public class ExpenseController {
     @Operation(summary = "Updates expense by id",
             description = "Updates expense with money, percent, end datetime, to current customer")
     @PutMapping
-    public void updateExpense(@RequestBody Expense expense) {
-        expenseService.updateExpense(expense);
+    public void updateExpense(@RequestBody ExpenseUpdate expenseUpdate) {
+        expenseService.updateExpense(expenseUpdate);
     }
 
     @Operation(summary = "Deletes expense by id")
