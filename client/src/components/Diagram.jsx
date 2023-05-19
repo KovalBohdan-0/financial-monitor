@@ -6,77 +6,52 @@ import {
   Tooltip,
   Area,
 } from 'recharts';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Colors } from '../styles';
+
 function Diagram() {
-  const data = [
-    {
-      Місяці: 'Січ.',
-      Витрати: 400,
-      Дохід: 240,
-    },
-    {
-      Місяці: 'Лют.',
-      Витрати: 300,
-      Дохід: 198,
-    },
-    {
-      Місяці: 'Бер.',
-      Витрати: 200,
-      Дохід: 80,
-    },
-    {
-      Місяці: 'Квіт.',
-      Витрати: 280,
-      Дохід: 398,
-    },
-    {
-      Місяці: 'Трав.',
-      Витрати: 190,
-      Дохід: 480,
-    },
-    {
-      Місяці: 'Черв.',
-      Витрати: 290,
-      Дохід: 300,
-    },
-    {
-      Місяці: 'Лип.',
-      Витрати: 390,
-      Дохід: 430,
-    },
-    {
-      Місяці: 'Серп.',
-      Витрати: 200,
-      Дохід: 80,
-    },
-    {
-      Місяці: 'Вер.',
-      Витрати: 280,
-      Дохід: 398,
-    },
-    {
-      Місяці: 'Жовт.',
-      Витрати: 190,
-      Дохід: 480,
-    },
-    {
-      Місяці: 'Лист.',
-      Витрати: 290,
-      Дохід: 300,
-    },
-    {
-      Місяці: 'Груд.',
-      Витрати: 390,
-      Дохід: 430,
-    },
-  ];
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    async function getData() {
+      const responseData = localStorage.getItem('responseData');
+      let parsedData;
+
+      if (responseData) {
+        parsedData = JSON.parse(responseData);
+      }
+
+      try {
+        const response = await axios.get(
+          'https://financial-monitor-production.up.railway.app/api/v1/report/monthly-report/2023',
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${parsedData}`,
+            },
+          }
+        );
+        setData(response.data);
+        console.log(response.data);
+      } catch (error) {
+        if (error.response) {
+          console.log(error.response.data.message);
+        } else {
+          console.log('Error:', error.message);
+        }
+      }
+    }
+    getData();
+  }, []);
+
+  const formatXAxisTick = (value) => value.substring(0, 3); // Extract first three letters
 
   return (
     <AreaChart
       width={730}
       height={250}
       data={data}
-      margin={{ top: 10, right: 150, left: -10, bottom: 0 }}
+      margin={{ top: 10, right: 150, left: 20, bottom: 0 }}
     >
       <defs>
         <linearGradient id='colorВитрати' x1='0' y1='0' x2='0' y2='1'>
@@ -104,7 +79,11 @@ function Diagram() {
           />
         </linearGradient>
       </defs>
-      <XAxis dataKey='Місяці' tick={{ fill: Colors.black }} />
+      <XAxis
+        dataKey='month'
+        tickFormatter={formatXAxisTick}
+        tick={{ fill: Colors.black }}
+      />
       <YAxis
         tickFormatter={(value) => `$${value}`}
         tick={{ fill: Colors.black }}
@@ -113,14 +92,14 @@ function Diagram() {
       <Tooltip formatter={(value) => `$${value}`} />
       <Area
         type='monotone'
-        dataKey='Витрати'
+        dataKey='sumOfExpense'
         stroke={Colors.diagramColorMain}
         fillOpacity={1}
         fill='url(#colorВитрати)'
       />
       <Area
         type='monotone'
-        dataKey='Дохід'
+        dataKey='sumOfIncome'
         stroke={Colors.diagramColorSecondary}
         fillOpacity={1}
         fill='url(#colorДохід)'
