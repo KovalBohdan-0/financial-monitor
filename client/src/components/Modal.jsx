@@ -93,7 +93,7 @@ export default function TransitionsModal(props) {
 
                   try {
                     const response = await axios.post(
-                      'https://financial-monitor-production.up.railway.app/api/v1/registration/sendEmail',
+                      'https://financial-monitor-production.up.railway.app/api/v1/registration/send-email-again',
                       signup,
                       {
                         headers: {

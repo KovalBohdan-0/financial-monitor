@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Logo from '/logo.svg';
-import People from '/people.png';
 import { Box, Typography, TextField } from '@mui/material';
 import { Colors } from '../styles';
 import AuthorBtn from '../components/ButtonSubmit';
@@ -10,6 +9,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import MainText from '../components/MainText';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import People from '/people.png';
 function LogIn() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -17,6 +17,7 @@ function LogIn() {
   const [seePassword, setSeePassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [userErrors, setUserErrors] = useState('');
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   const validatePassword = (password) => {
     const errors = [];
@@ -60,8 +61,8 @@ function LogIn() {
             },
           }
         );
-        localStorage.setItem('responseData', JSON.stringify(response.data));
-        console.log(response.data);
+        localStorage.setItem('responseData', JSON.stringify(response.data.jwt));
+        console.log(response.data.jwt);
 
         // Navigate to MainPage.js
         navigate('/main');
@@ -76,10 +77,25 @@ function LogIn() {
     }
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      const screenWidth = window.innerWidth;
+      setIsSmallScreen(screenWidth <= 768); // Set the screen width threshold for small screens (e.g., iPad, iPhone)
+    };
+
+    handleResize(); // Call the function initially
+
+    window.addEventListener('resize', handleResize); // Add event listener for window resize
+
+    return () => {
+      window.removeEventListener('resize', handleResize); // Clean up the event listener on component unmount
+    };
+  }, []);
+
   return (
     <Box
       sx={{
-        width: '1280px',
+        width: isSmallScreen ? '100%' : '1280px',
         margin: '0 auto',
         padding: '33px 26px 26px 100px',
       }}
@@ -183,9 +199,11 @@ function LogIn() {
             </form>
           </Box>
         </Box>
-        <Box>
-          <img src={People} alt='' />
-        </Box>
+        {!isSmallScreen && (
+          <Box>
+            <img src={People} alt='' />
+          </Box>
+        )}
       </Box>
 
       {userErrors ? (

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, Typography, TextField } from '@mui/material';
 import { Colors } from '../styles';
 import { Link } from 'react-router-dom';
@@ -19,6 +19,7 @@ function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [seePassword, setSeePassword] = useState(false);
   const [message, setMessage] = useState('');
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [errors, setErrors] = useState({ '': '' });
   const validatePassword = (password) => {
     const errors = [];
@@ -80,7 +81,7 @@ function SignUp() {
             },
           }
         );
-        localStorage.setItem('responseData', JSON.stringify(response.data));
+        localStorage.setItem('responseData', JSON.stringify(response.data.jwt));
         console.log(response.data);
       } catch (error) {
         if (error.response) {
@@ -92,7 +93,20 @@ function SignUp() {
       }
     }
   };
+  useEffect(() => {
+    const handleResize = () => {
+      const screenWidth = window.innerWidth;
+      setIsSmallScreen(screenWidth <= 768); // Set the screen width threshold for small screens (e.g., iPad, iPhone)
+    };
 
+    handleResize(); // Call the function initially
+
+    window.addEventListener('resize', handleResize); // Add event listener for window resize
+
+    return () => {
+      window.removeEventListener('resize', handleResize); // Clean up the event listener on component unmount
+    };
+  }, []);
   return (
     <Box
       sx={{
@@ -267,9 +281,11 @@ function SignUp() {
             </form>
           </Box>
         </Box>
-        <Box>
-          <img src={People} alt='' />
-        </Box>
+        {!isSmallScreen && (
+          <Box>
+            <img src={People} alt='' />
+          </Box>
+        )}
       </Box>
     </Box>
   );
