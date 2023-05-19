@@ -45,7 +45,7 @@ public class DepositService {
         Deposit deposit = getDepositById(depositUpdate.id());
         deposit.setMoney(depositUpdate.money());
         deposit.setPercent(depositUpdate.percent());
-        deposit.setEndTime(depositUpdate.endDateTime());
+        deposit.setEndTime(depositUpdate.endTime());
         depositRepository.save(deposit);
     }
 

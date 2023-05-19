@@ -45,7 +45,7 @@ public class CreditService {
         Credit credit = getCreditById(creditUpdate.id());
         credit.setMoney(creditUpdate.money());
         credit.setPercent(creditUpdate.percent());
-        credit.setEndTime(creditUpdate.endDateTime());
+        credit.setEndTime(creditUpdate.endTime());
         creditRepository.save(credit);
     }
 
