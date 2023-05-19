@@ -44,6 +44,8 @@ public class CreditService {
     public void updateCredit(CreditUpdate creditUpdate) {
         Credit credit = getCreditById(creditUpdate.id());
         credit.setMoney(creditUpdate.money());
+        credit.setPercent(creditUpdate.percent());
+        credit.setEndTime(creditUpdate.endDateTime());
         creditRepository.save(credit);
     }
 

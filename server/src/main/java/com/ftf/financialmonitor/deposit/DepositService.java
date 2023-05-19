@@ -44,6 +44,8 @@ public class DepositService {
     public void updateDeposit(DepositUpdate depositUpdate) {
         Deposit deposit = getDepositById(depositUpdate.id());
         deposit.setMoney(depositUpdate.money());
+        deposit.setPercent(depositUpdate.percent());
+        deposit.setEndTime(depositUpdate.endDateTime());
         depositRepository.save(deposit);
     }
 
