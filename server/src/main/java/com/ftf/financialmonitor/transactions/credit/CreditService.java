@@ -44,6 +44,8 @@ public class CreditService {
     public void updateCredit(CreditUpdate creditUpdate) {
         Credit credit = getCreditById(creditUpdate.id());
         credit.setMoney(creditUpdate.money());
+        credit.setPercent(creditUpdate.percent());
+        credit.setEndTime(creditUpdate.endTime());
         creditRepository.save(credit);
     }
 
@@ -71,11 +73,15 @@ public class CreditService {
                     firstCredit = credit;
                 }
 
-                sumOfCredits = sumOfCredits.add(credit.getMoney().multiply(credit.getPercent()
-                        .add(BigDecimal.valueOf(100))
-                        .multiply(BigDecimal.valueOf(0.01 * (1 -
-                                (double) ChronoUnit.MONTHS.between(credit.getCreationTime(), LocalDateTime.now()) /
-                                ChronoUnit.MONTHS.between(credit.getCreationTime(), credit.getEndTime()))))));
+                if (ChronoUnit.MONTHS.between(credit.getCreationTime(), credit.getEndTime()) == 0) {
+                    sumOfCredits = sumOfCredits.add(credit.getMoney());
+                } else {
+                    sumOfCredits = sumOfCredits.add(credit.getMoney().multiply(credit.getPercent()
+                            .add(BigDecimal.valueOf(100))
+                            .multiply(BigDecimal.valueOf(0.01 * (1 -
+                                    (double) ChronoUnit.MONTHS.between(credit.getCreationTime(), LocalDateTime.now()) /
+                                            ChronoUnit.MONTHS.between(credit.getCreationTime(), credit.getEndTime()))))));
+                }
             }
 
             return new CreditInfo(sumOfCredits, credits.size(), firstCredit.getEndTime());

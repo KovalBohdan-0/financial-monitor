@@ -44,6 +44,8 @@ public class DepositService {
     public void updateDeposit(DepositUpdate depositUpdate) {
         Deposit deposit = getDepositById(depositUpdate.id());
         deposit.setMoney(depositUpdate.money());
+        deposit.setPercent(depositUpdate.percent());
+        deposit.setEndTime(depositUpdate.endTime());
         depositRepository.save(deposit);
     }
 
@@ -72,8 +74,9 @@ public class DepositService {
                 }
 
                 sumOfIncome = sumOfIncome.add(deposit.getMoney()
-                        .multiply(deposit.getPercent().multiply(new BigDecimal("0.0000003858")))
-                        .multiply(BigDecimal.valueOf(ChronoUnit.SECONDS.between(deposit.getCreationTime(), deposit.getEndTime()))));
+                        .multiply(deposit.getPercent().multiply(new BigDecimal("0.000000003802570")))
+                        .multiply(BigDecimal.valueOf(ChronoUnit.SECONDS.between(deposit.getCreationTime(), deposit.getEndTime()))
+                                ));
             }
 
             return new DepositInfo(sumOfIncome, deposits.size(), firstDeposit.getEndTime());
