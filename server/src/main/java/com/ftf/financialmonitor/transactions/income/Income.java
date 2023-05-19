@@ -1,5 +1,6 @@
 package com.ftf.financialmonitor.transactions.income;
 
+import com.ftf.financialmonitor.transactions.Transaction;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Income {
+public class Income implements Transaction{
     @Id
     @SequenceGenerator(
             name = "income_id_sequence",
@@ -35,4 +36,9 @@ public class Income {
     private LocalDateTime creationTime;
     @Column(nullable = false)
     private Long customerId;
+
+    @Override
+    public LocalDateTime getCreationTime(){
+        return creationTime;
+    }
 }
