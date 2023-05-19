@@ -38,6 +38,7 @@ function TransactHOC({ type }) {
     e.preventDefault();
 
     const currentDate = new Date();
+    currentDate.setMonth(currentDate.getMonth() + sliderValue);
     const formattedTime = currentDate.toISOString().split(' ')[0]; // Format: hh:mm:ss
     const responseData = localStorage.getItem('responseData');
     console.log(responseData);
@@ -163,10 +164,10 @@ function TransactHOC({ type }) {
                 value={sliderValue}
                 onChange={handleSliderChange}
                 color='fourth'
-                defaultValue={0}
+                defaultValue={1}
                 step={1}
-                min={0}
-                max={12}
+                min={1}
+                max={24}
                 valueLabelDisplay='auto'
                 sx={{ width: '320px' }}
               />
