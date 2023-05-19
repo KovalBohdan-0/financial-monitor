@@ -6,12 +6,15 @@ import {
   Tooltip,
   Area,
 } from 'recharts';
+import { Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Colors } from '../styles';
 
 function Diagram() {
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
+
   useEffect(() => {
     async function getData() {
       const responseData = localStorage.getItem('responseData');
@@ -33,7 +36,9 @@ function Diagram() {
         );
         setData(response.data);
         console.log(response.data);
+        setIsLoading(false); // Data loading complete
       } catch (error) {
+        setIsLoading(false); // Data loading complete
         if (error.response) {
           console.log(error.response.data.message);
         } else {
@@ -45,6 +50,14 @@ function Diagram() {
   }, []);
 
   const formatXAxisTick = (value) => value.substring(0, 3); // Extract first three letters
+
+  if (isLoading) {
+    return (
+      <Typography variant='h2' color='primary'>
+        Loading...
+      </Typography>
+    ); // Render loading message
+  }
 
   return (
     <AreaChart

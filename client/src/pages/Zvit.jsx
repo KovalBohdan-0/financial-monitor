@@ -5,14 +5,8 @@ import MainText from '../components/MainText';
 import Person from '/Person-Pose.svg';
 
 import MainNavigation from '../components/MainNavigation';
-import MyCardText from '../components/MyCardText';
-import Diagram from '../components/Diagram';
-import AnalitycsBtn from '../components/AnalyticsBtn';
-import CardInfo from '../components/CardInfo';
 
-function Main() {
-  // const [search, setSearch] = useState('');
-
+function Zvit() {
   return (
     <>
       <Box m='0 auto' width='1280px' padding='43px 66px'>
@@ -21,27 +15,21 @@ function Main() {
             <img src={Logo} alt='Logo' />
           </Box>
           <Box display={'flex'} alignItems={'center'} gap='200px'>
-            <MainText value1='Головна' />
+            <MainText value1='Звіти' />
           </Box>
         </Box>
         <Box display={'flex'} gap={'17px'} mt='36px'>
           <Box>
-            <MainNavigation value={'/main'} />
+            <MainNavigation value={'/zvit'} />
             <Box mt='125px'>
               <img src={Person} alt='' />
             </Box>
           </Box>
-          <Box>
-            <MyCardText text='Мої рахунки' />
-            <CardInfo sx={{ margin: '40px 0' }} />
-            <MyCardText text='Аналітика' />
-            <AnalitycsBtn />
-            <Diagram />
-          </Box>
+          <Box></Box>
         </Box>
       </Box>
     </>
   );
 }
 
-export default Main;
+export default Zvit;

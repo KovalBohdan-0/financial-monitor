@@ -4,9 +4,9 @@ import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import HomeIcon from '/home.svg';
-import StatsIcon from '/stats.svg';
+// import StatsIcon from '/stats.svg';
 import TransactIcon from '/transaction.svg';
-import SettingIcon from '/setting.svg';
+// import SettingIcon from '/setting.svg';
 import ZvitIcon from '/zvitIcon.svg';
 import PropTypes from 'prop-types';
 
@@ -40,7 +40,7 @@ export default function MainNavigation({ value }) {
             <img src={HomeIcon} alt='HomeIcon' /> Головна
           </ItemLink>
         </Item>
-        <Item elevation={0}>
+        {/* <Item elevation={0}>
           <ItemLink
             to='/stats'
             isselected={selectedItem === '/stats' ? value : undefined}
@@ -48,7 +48,7 @@ export default function MainNavigation({ value }) {
             <img src={StatsIcon} alt='StatsIcon' />
             Статистика
           </ItemLink>
-        </Item>
+        </Item> */}
         <Item elevation={0}>
           <ItemLink
             to='/transactions'
@@ -58,7 +58,7 @@ export default function MainNavigation({ value }) {
             Транзакції
           </ItemLink>
         </Item>
-        <Item elevation={0}>
+        {/* <Item elevation={0}>
           <ItemLink
             to='/settings'
             isselected={selectedItem === '/settings' ? value : undefined}
@@ -66,7 +66,7 @@ export default function MainNavigation({ value }) {
             <img src={SettingIcon} alt='SettingIcon' />
             Налаштування
           </ItemLink>
-        </Item>
+        </Item> */}
         <Item elevation={0}>
           <ItemLink
             to='/zvit'

@@ -1,10 +1,12 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { Colors } from '../styles';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+
 function CardInfo(props) {
   const [isDepo, setIsDepo] = useState([]);
   const [isCreadite, setIsCreadite] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     async function getData() {
@@ -17,7 +19,7 @@ function CardInfo(props) {
 
       try {
         const response = await axios.get(
-          'https://financial-monitor-production.up.railway.app/api/v1/credit/all-by-customer',
+          'https://financial-monitor-production.up.railway.app/api/v1/credit/info',
           {
             headers: {
               'Content-Type': 'application/json',
@@ -27,7 +29,7 @@ function CardInfo(props) {
         );
 
         const responseDepo = await axios.get(
-          'https://financial-monitor-production.up.railway.app/api/v1/deposit/all-by-customer',
+          'https://financial-monitor-production.up.railway.app/api/v1/deposit/info',
           {
             headers: {
               'Content-Type': 'application/json',
@@ -40,7 +42,10 @@ function CardInfo(props) {
 
         setIsCreadite(response.data);
         console.log(response.data);
+
+        setIsLoading(false); // Data loading complete
       } catch (error) {
+        setIsLoading(false); // Data loading complete
         if (error.response) {
           console.log(error.response.data.message);
         } else {
@@ -50,6 +55,14 @@ function CardInfo(props) {
     }
     getData();
   }, []);
+
+  if (isLoading) {
+    return (
+      <Typography variant='h2' color='primary'>
+        Loading...
+      </Typography>
+    ); // Render loading message
+  }
   return (
     <Box display={'flex'} gap='50px' {...props}>
       <Box
@@ -61,15 +74,21 @@ function CardInfo(props) {
           padding: '10px',
         }}
       >
-        Ваші депозити
-        {isDepo.map((item) => {
-          const { id, money, percent } = item;
-          return (
-            <Box key={id} sx={{ color: 'white' }}>
-              Id: {id}, Сума: {money} {percent}%
-            </Box>
-          );
-        })}
+        <Typography color='white' mb='5px'>
+          Ваші депозити
+        </Typography>{' '}
+        <Typography color='white' mb='5px'>
+          Отримаєте : {parseInt(isDepo.moneyThatWillGet)}₴
+        </Typography>{' '}
+        <Typography color='white'>
+          {' '}
+          Кількість : {isDepo.depositsCount}
+        </Typography>{' '}
+        <Typography color='white'>
+          {' '}
+          Найшвидший час закінчення :{' '}
+          {new Date(isDepo.firstEndingDepositTime).toLocaleString()}
+        </Typography>{' '}
       </Box>
       <Box
         sx={{
@@ -81,16 +100,21 @@ function CardInfo(props) {
         }}
       >
         {' '}
-        Ваші кредити
-        {isCreadite.map((item) => {
-          const { id, money, percent } = item;
-          return (
-            <Box key={id} sx={{ color: 'white' }}>
-              {money}
-              {percent}
-            </Box>
-          );
-        })}
+        <Typography color='white' mb='5px'>
+          Ваші кредити
+        </Typography>{' '}
+        <Typography color='white' mb='5px'>
+          Потрібно оплатити : {parseInt(isCreadite.moneyToPay)}₴
+        </Typography>{' '}
+        <Typography color='white'>
+          {' '}
+          Кількість : {isCreadite.creditsCount}
+        </Typography>{' '}
+        <Typography color='white' mb='5px'>
+          {' '}
+          Найшвидший час закінчення :{' '}
+          {new Date(isCreadite.firstEndingCreditTime).toLocaleString()}
+        </Typography>{' '}
       </Box>
     </Box>
   );

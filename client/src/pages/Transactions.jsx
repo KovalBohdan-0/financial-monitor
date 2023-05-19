@@ -118,7 +118,7 @@ function Transactions() {
             </Box>
           </Box>
           <Box>
-            <Box marginBottom='25px' display={'flex'}>
+            <Box marginBottom='25px' display={'flex'} gap='10px'>
               <img
                 onClick={toggleDepo}
                 src={isDepo ? DepoActive : Depo}
