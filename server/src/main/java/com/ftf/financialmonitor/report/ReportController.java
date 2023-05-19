@@ -32,4 +32,14 @@ public class ReportController {
         return reportService.getListOfAllMonthlyReportsByYear(year);
     }
 
+    @Operation(summary = "Returns all transactions",
+            description = "Returns all transactions of customer")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "successfully returned list of transactions",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = TransactionReport.class))})})
+    @GetMapping("/all-transactions")
+    public List<TransactionReport> getAllTransactionsOfCustomer() {
+        return reportService.getListOfAllTransactionsOfCustomer();
+    }
 }
