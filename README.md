@@ -8,11 +8,15 @@
 
 
 * [![Spring Boot][Spring-boot.io]][SpringBoot-url]
+* [![Spring Security][Spring-security.io]][SpringSecurity-url]
 * [![Postgresql][Postgresql.org]][Postgresql-url]
 * [![JavaScript][JavaScript.io]][JavaScript-url]
 * [![React][React.org]][React-url]
 * [![Railway][Railway.io]][Railway-url]
 * [![Vercel][Vercel.io]][Vercel-url]
+* [![Axios][Axios.io]][Axios-url]
+
+* [![MUI][MUI.io]][MUI-url]
 
 ## Про проект
 
@@ -42,4 +46,11 @@
 [JavaScript-url]: https://www.javascript.com
 [Vercel.io]: https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white
 [Vercel-url]: https://vercel.com
+[MUI.io]: https://img.shields.io/badge/MUI-0081CB?style=for-the-badge&logo=material-ui&logoColor=white
+[MUI-url]: https://mui.com
+[Spring-security.io]: https://img.shields.io/badge/Spring%20Security-6DB33F?style=for-the-badge&logo=springboot&logoColor=white
+[SpringSecurity-url]: https://spring.io/projects/spring-security
+[Axios.io]: https://img.shields.io/badge/Axios-61DAFB?style=for-the-badge&logo=axios&logoColor=black
+[Axios-url]: https://axios-http.com
 
+```
