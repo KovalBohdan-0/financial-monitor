@@ -2,7 +2,7 @@
 
 ## Посилання
 
-[Link] (https://budget-buddy-finance.vercel.app/) - [https://budget-buddy-finance.vercel.app/](https://budget-buddy-finance.vercel.app/)
+[Link](https://budget-buddy-finance.vercel.app/) - [https://budget-buddy-finance.vercel.app/](https://budget-buddy-finance.vercel.app/)
 
 ## Технології
 
