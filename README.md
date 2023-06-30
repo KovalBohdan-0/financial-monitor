@@ -2,7 +2,7 @@
 
 ## Посилання
 
-[Link](https://team-ftf-hackaton-test-task.netlify.app/) - [https://team-ftf-hackaton-test-task.netlify.app/](https://team-ftf-hackaton-test-task.netlify.app/)
+[Link] (https://budget-buddy-finance.vercel.app/) - [https://budget-buddy-finance.vercel.app/](https://budget-buddy-finance.vercel.app/)
 
 ## Технології
 
