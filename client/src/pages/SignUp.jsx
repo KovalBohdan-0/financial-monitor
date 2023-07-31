@@ -11,6 +11,7 @@ import TransitionsModal from '../components/Modal';
 import AuthorBtn from '../components/ButtonSubmit';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
+import api from "../enviroment.jsx";
 function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -73,7 +74,7 @@ function SignUp() {
 
       try {
         const response = await axios.post(
-          'https://financial-monitor-production.up.railway.app/api/v1/registration',
+          `${api}/registration`,
           signup,
           {
             headers: {

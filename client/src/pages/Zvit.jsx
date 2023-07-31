@@ -7,6 +7,7 @@ import MainText from '../components/MainText';
 import Person from '/Person-Pose.svg';
 import MainNavigation from '../components/MainNavigation';
 import { Colors } from '../styles';
+import api from "../enviroment.jsx";
 
 function Zvit() {
   const [data, setData] = useState([]);
@@ -26,7 +27,7 @@ function Zvit() {
 
       try {
         const response = await axios.get(
-          'https://financial-monitor-production.up.railway.app/api/v1/report/all-transactions',
+          `${api}/report/all-transactions`,
           {
             headers: {
               'Content-Type': 'application/json',

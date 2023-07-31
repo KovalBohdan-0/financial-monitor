@@ -2,6 +2,7 @@ import { Box, Typography } from '@mui/material';
 import { Colors } from '../styles';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import api from '../enviroment.jsx';
 
 function CardInfo(props) {
   const [isDepo, setIsDepo] = useState([]);
@@ -19,7 +20,7 @@ function CardInfo(props) {
 
       try {
         const response = await axios.get(
-          'https://financial-monitor-production.up.railway.app/api/v1/credit/info',
+          `${api}/credit/info`,
           {
             headers: {
               'Content-Type': 'application/json',
@@ -29,7 +30,7 @@ function CardInfo(props) {
         );
 
         const responseDepo = await axios.get(
-          'https://financial-monitor-production.up.railway.app/api/v1/deposit/info',
+          `${api}/deposit/info`,
           {
             headers: {
               'Content-Type': 'application/json',

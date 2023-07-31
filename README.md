@@ -12,7 +12,6 @@
 * [![Postgresql][Postgresql.org]][Postgresql-url]
 * [![JavaScript][JavaScript.io]][JavaScript-url]
 * [![React][React.org]][React-url]
-* [![Railway][Railway.io]][Railway-url]
 * [![Vercel][Vercel.io]][Vercel-url]
 * [![Axios][Axios.io]][Axios-url]
 
@@ -44,8 +43,6 @@
 [Postgresql-url]: https://postgresql.org
 [React.org]: https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black
 [React-url]: https://reactjs.org
-[Railway.io]: https://img.shields.io/badge/Railway-FF0000?style=for-the-badge&logo=railway&logoColor=white
-[Railway-url]: https://railway.app
 [JavaScript.io]: https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black
 [JavaScript-url]: https://www.javascript.com
 [Vercel.io]: https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white

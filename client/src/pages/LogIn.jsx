@@ -10,6 +10,7 @@ import MainText from '../components/MainText';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import People from '/people.png';
+import api from "../enviroment.jsx";
 function LogIn() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -53,7 +54,7 @@ function LogIn() {
     if (validateForm()) {
       try {
         const response = await axios.post(
-          'https://financial-monitor-production.up.railway.app/api/v1/login',
+          `${api}/login`,
           login,
           {
             headers: {

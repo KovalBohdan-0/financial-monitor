@@ -22,6 +22,7 @@ import PurchaseComponent from '../components/Purchase';
 import IncomeComponent from '../components/Income';
 import EditComponent from '../components/EditComponent';
 import axios from 'axios';
+import api from "../enviroment.jsx";
 function Transactions() {
   const [data, setData] = useState([]);
   const [isDepo, setIsDepo] = useState(false);
@@ -79,7 +80,7 @@ function Transactions() {
 
       try {
         const response = await axios.get(
-          'https://financial-monitor-production.up.railway.app/api/v1/report/monthly-report/2023',
+          '${apiUrl}/report/monthly-report/2023',
           {
             headers: {
               'Content-Type': 'application/json',

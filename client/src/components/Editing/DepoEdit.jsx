@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import { Typography, TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import api from "../../enviroment.jsx";
 function DepoEdit() {
   const [data, setData] = useState([]);
   const [editId, setEditId] = useState(null);
@@ -20,7 +21,7 @@ function DepoEdit() {
     try {
       axios
         .delete(
-          `https://financial-monitor-production.up.railway.app/api/v1/deposit/${id}`,
+          `${api}/deposit/${id}`,
           {
             headers: {
               'Content-Type': 'application/json',
@@ -61,7 +62,7 @@ function DepoEdit() {
     console.log(formattedTime);
     try {
       await axios.put(
-        `https://financial-monitor-production.up.railway.app/api/v1/deposit`,
+        `${api}/deposit`,
         {
           id: id,
           money: Number(editValue),
@@ -101,7 +102,7 @@ function DepoEdit() {
 
     try {
       const response = await axios.get(
-        'https://financial-monitor-production.up.railway.app/api/v1/deposit/all-by-customer',
+        `${api}/deposit/all-by-customer`,
         {
           headers: {
             'Content-Type': 'application/json',

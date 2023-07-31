@@ -11,6 +11,7 @@ import PersonModal from '/Person-Modal.svg';
 import ConfirmIcon from '/confirmation.svg';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import api from "../enviroment.jsx";
 const style = {
   position: 'absolute',
   top: '50%',
@@ -93,7 +94,7 @@ export default function TransitionsModal(props) {
 
                   try {
                     const response = await axios.post(
-                      'https://financial-monitor-production.up.railway.app/api/v1/registration/send-email-again',
+                      `${api}/registration/send-email-again`,
                       signup,
                       {
                         headers: {

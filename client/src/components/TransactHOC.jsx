@@ -9,6 +9,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import PersonResponse from '/Person-Modal.svg';
 import Confirmation from '/confirmation.svg';
+import api from "../enviroment.jsx";
 
 TransactHOC.propTypes = {
   type: PropTypes.oneOf(['deposit', 'credit']).isRequired,
@@ -57,8 +58,8 @@ function TransactHOC({ type }) {
 
     const apiUrl =
       type === 'deposit'
-        ? 'https://financial-monitor-production.up.railway.app/api/v1/deposit'
-        : 'https://financial-monitor-production.up.railway.app/api/v1/credit';
+        ? `${api}/deposit`
+        : `${api}/credit`;
 
     try {
       const response = await axios.post(apiUrl, transactionData, {

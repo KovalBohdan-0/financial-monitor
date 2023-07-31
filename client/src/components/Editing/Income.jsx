@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import { Typography, TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import api from "../../enviroment.jsx";
 function Income() {
   const [data, setData] = useState([]);
   const [editId, setEditId] = useState(null);
@@ -19,7 +20,7 @@ function Income() {
     try {
       axios
         .delete(
-          `https://financial-monitor-production.up.railway.app/api/v1/income/${id}`,
+          `${api}/income/${id}`,
           {
             headers: {
               'Content-Type': 'application/json',
@@ -55,7 +56,7 @@ function Income() {
     console.log(editValue);
     try {
       await axios.put(
-        `https://financial-monitor-production.up.railway.app/api/v1/income`,
+        `${api}/income`,
         {
           id: id,
           money: Number(editValue),
@@ -91,7 +92,7 @@ function Income() {
 
     try {
       const response = await axios.get(
-        'https://financial-monitor-production.up.railway.app/api/v1/income/all-by-customer',
+        `${api}/income/all-by-customer`,
         {
           headers: {
             'Content-Type': 'application/json',

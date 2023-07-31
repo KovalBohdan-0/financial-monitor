@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import axios from 'axios';
 import PersonResponse from '/Person-Modal.svg';
 import Confirmation from '/confirmation.svg';
+import api from "../enviroment.jsx";
 
 function PurchaseComponent() {
   const [credit, setCredit] = useState(0);
@@ -48,7 +49,7 @@ function PurchaseComponent() {
     };
     try {
       const response = await axios.post(
-        'https://financial-monitor-production.up.railway.app/api/v1/expense',
+        `${api}/expense`,
         Credit,
         {
           headers: {

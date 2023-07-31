@@ -10,6 +10,7 @@ import { Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Colors } from '../styles';
+import api from "../enviroment.jsx";
 
 function Diagram() {
   const [data, setData] = useState([]);
@@ -26,7 +27,7 @@ function Diagram() {
 
       try {
         const response = await axios.get(
-          'https://financial-monitor-production.up.railway.app/api/v1/report/monthly-report/2023',
+          `${api}/report/monthly-report/2023`,
           {
             headers: {
               'Content-Type': 'application/json',
